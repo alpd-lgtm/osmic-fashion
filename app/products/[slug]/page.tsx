@@ -1,158 +1,54 @@
-const whatsappNumber = "9779800000000";
-
-const createWhatsAppLink = (message: string) =>
-  `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-
 const allProducts = [
-  {
-    slug: "red-festive-kurtha",
-    title: "Red Festive Kurtha",
-    price: "Rs. 3950",
-    category: "Kurthas",
-    img: "https://images.unsplash.com/photo-1583391733981-6d3c2d95a88a?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Elegant festive kurtha with boutique finishing, perfect for family gatherings and special occasions.",
-    fabric: "Soft premium blend",
-    sizes: "M, L, XL",
-  },
-  {
-    slug: "wedding-kurtha-set",
-    title: "Wedding Kurtha Set",
-    price: "Rs. 4750",
-    category: "Kurthas",
-    img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "A complete festive look designed for weddings and celebration events.",
-    fabric: "Festive wear fabric",
-    sizes: "M, L, XL",
-  },
-  {
-    slug: "celebration-saree",
-    title: "Celebration Saree",
-    price: "Rs. 6800",
-    category: "Sarees",
-    img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "A graceful saree option with a refined boutique look for parties and celebrations.",
-    fabric: "Premium saree fabric",
-    sizes: "Free Size",
-  },
-  {
-    slug: "elegant-party-saree",
-    title: "Elegant Party Saree",
-    price: "Rs. 7250",
-    category: "Sarees",
-    img: "https://images.unsplash.com/photo-1612336307429-8a898d10e223?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "A premium party saree with elegant drape and polished occasion styling.",
-    fabric: "Luxury occasion fabric",
-    sizes: "Free Size",
-  },
-  {
-    slug: "printed-ethnic-top",
-    title: "Printed Ethnic Top",
-    price: "Rs. 1850",
-    category: "Boutique Tops",
-    img: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Simple, stylish, and comfortable boutique top for daily and semi-festive wear.",
-    fabric: "Cotton blend",
-    sizes: "S, M, L",
-  },
-  {
-    slug: "boutique-daily-blouse",
-    title: "Boutique Daily Blouse",
-    price: "Rs. 1650",
-    category: "Boutique Tops",
-    img: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Easy-to-style boutique blouse made for everyday comfort with elegant finishing.",
-    fabric: "Soft everyday fabric",
-    sizes: "S, M, L",
-  },
+  { slug: "kurtha-1", img: "/products/kurtha-1.avif", title: "Kurtha Style 1" },
+  { slug: "kurtha-2", img: "/products/kurtha-2.webp", title: "Kurtha Style 2" },
+  { slug: "kurtha-3", img: "/products/kurtha-3.jpg", title: "Kurtha Style 3" },
+  { slug: "kurtha-4", img: "/products/kurtha-4.jpg", title: "Kurtha Style 4" },
+  { slug: "kurtha-5", img: "/products/kurtha-5.jpg", title: "Kurtha Style 5" },
+  { slug: "kurtha-6", img: "/products/kurtha-6.jpg", title: "Kurtha Style 6" },
+
+  { slug: "saree-1", img: "/products/saree-1.webp", title: "Saree Style 1" },
+  { slug: "saree-2", img: "/products/saree-2.jpg", title: "Saree Style 2" },
+  { slug: "saree-3", img: "/products/saree-3.webp", title: "Saree Style 3" },
+  { slug: "saree-4", img: "/products/saree-4.webp", title: "Saree Style 4" },
+  { slug: "saree-5", img: "/products/saree-5.jpeg", title: "Saree Style 5" },
+  { slug: "saree-6", img: "/products/saree-6.webp", title: "Saree Style 6" },
+
+  { slug: "top-2", img: "/products/top-2.webp", title: "Top Style 1" },
+  { slug: "top-4", img: "/products/top-4.webp", title: "Top Style 2" },
+  { slug: "top-5", img: "/products/top-5.webp", title: "Top Style 3" },
+  { slug: "top-6", img: "/products/top-6.jpg", title: "Top Style 4" },
 ];
 
-export default async function ProductDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-
-  const product = allProducts.find((item) => item.slug === slug);
+export default function ProductDetailPage({ params }: any) {
+  const product = allProducts.find((p) => p.slug === params.slug);
 
   if (!product) {
-    return (
-      <div className="min-h-screen bg-[linear-gradient(180deg,#fffdfb_0%,#fff8f2_100%)] px-4 py-10 text-slate-800">
-        <div className="mx-auto max-w-4xl rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm">
-          <h1 className="text-2xl font-semibold">Product not found</h1>
-          <p className="mt-3 text-stone-600">
-            The product you are looking for is not available.
-          </p>
-        </div>
-      </div>
-    );
+    return <div className="p-10">Product not found</div>;
   }
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#fffdfb_0%,#fff8f2_100%)] px-4 py-8 text-slate-800 md:py-12">
-      <div className="mx-auto grid max-w-7xl gap-8 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-2 md:p-8">
-        <div className="overflow-hidden rounded-[24px]">
-          <img
-            src={product.img}
-            alt={product.title}
-            className="h-[420px] w-full object-cover"
-          />
-        </div>
+    <div className="max-w-5xl mx-auto px-4 py-10">
+      <div className="grid md:grid-cols-2 gap-10">
+        <img
+          src={product.img}
+          className="w-full rounded-2xl object-cover"
+        />
 
-        <div className="flex flex-col justify-center">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-red-700">
-            {product.category}
-          </div>
+        <div>
+          <h1 className="text-2xl font-semibold">{product.title}</h1>
 
-          <h1 className="mt-2 text-3xl font-semibold md:text-5xl">
-            {product.title}
-          </h1>
-
-          <div className="mt-4 text-2xl font-semibold text-blue-900">
-            {product.price}
-          </div>
-
-          <p className="mt-5 text-sm leading-7 text-stone-600 md:text-base">
-            {product.description}
+          <p className="mt-4 text-gray-600">
+            Premium boutique design with tailoring support. Perfect for festive
+            and daily wear.
           </p>
 
-          <div className="mt-6 grid gap-3 rounded-[20px] bg-stone-50 p-4 text-sm text-slate-700">
-            <div>
-              <span className="font-semibold">Category:</span> {product.category}
-            </div>
-            <div>
-              <span className="font-semibold">Fabric:</span> {product.fabric}
-            </div>
-            <div>
-              <span className="font-semibold">Sizes:</span> {product.sizes}
-            </div>
-          </div>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={createWhatsAppLink(
-                `Hello, I want to order ${product.title} priced at ${product.price}. Please share availability and sizes.`
-              )}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center rounded-full bg-green-500 px-6 py-3 font-medium text-white transition hover:bg-green-600"
-            >
-              Order on WhatsApp
-            </a>
-
-            <a
-              href="/products"
-              className="inline-flex items-center rounded-full border border-slate-200 bg-white px-6 py-3 font-medium text-slate-700 transition hover:border-red-200 hover:text-red-700"
-            >
-              Back to Products
-            </a>
-          </div>
+          <a
+            href={`https://wa.me/9779800000000?text=Hello, I want to order ${product.title}`}
+            target="_blank"
+            className="inline-block mt-6 bg-green-500 text-white px-6 py-3 rounded-full"
+          >
+            Order on WhatsApp
+          </a>
         </div>
       </div>
     </div>
