@@ -1,56 +1,166 @@
-const allProducts = [
-  { slug: "kurtha-1", img: "/products/kurtha-1.avif", title: "Kurtha Style 1" },
-  { slug: "kurtha-2", img: "/products/kurtha-2.webp", title: "Kurtha Style 2" },
-  { slug: "kurtha-3", img: "/products/kurtha-3.jpg", title: "Kurtha Style 3" },
-  { slug: "kurtha-4", img: "/products/kurtha-4.jpg", title: "Kurtha Style 4" },
-  { slug: "kurtha-5", img: "/products/kurtha-5.jpg", title: "Kurtha Style 5" },
-  { slug: "kurtha-6", img: "/products/kurtha-6.jpg", title: "Kurtha Style 6" },
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { products } from "@/lib/products";
 
-  { slug: "saree-1", img: "/products/saree-1.webp", title: "Saree Style 1" },
-  { slug: "saree-2", img: "/products/saree-2.jpg", title: "Saree Style 2" },
-  { slug: "saree-3", img: "/products/saree-3.webp", title: "Saree Style 3" },
-  { slug: "saree-4", img: "/products/saree-4.webp", title: "Saree Style 4" },
-  { slug: "saree-5", img: "/products/saree-5.jpeg", title: "Saree Style 5" },
-  { slug: "saree-6", img: "/products/saree-6.webp", title: "Saree Style 6" },
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-  { slug: "top-2", img: "/products/top-2.webp", title: "Top Style 1" },
-  { slug: "top-4", img: "/products/top-4.webp", title: "Top Style 2" },
-  { slug: "top-5", img: "/products/top-5.webp", title: "Top Style 3" },
-  { slug: "top-6", img: "/products/top-6.jpg", title: "Top Style 4" },
-];
-
-export default function ProductDetailPage({ params }: any) {
-  const product = allProducts.find((p) => p.slug === params.slug);
+  const product = products.find((p) => p.slug === slug);
 
   if (!product) {
-    return <div className="p-10">Product not found</div>;
+    notFound();
   }
 
+  const whatsappNumber = "9779800000000";
+  const whatsappMessage = `Hi, I want to order ${product.name}`;
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
+
+  const relatedProducts = products
+    .filter((p) => p.category === product.category && p.slug !== product.slug)
+    .slice(0, 3);
+
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
-      <div className="grid md:grid-cols-2 gap-10">
-        <img
-          src={product.img}
-          className="w-full rounded-2xl object-cover"
-        />
+    <main className="max-w-7xl mx-auto px-4 py-12">
+      <div className="mb-8">
+        <Link
+          href="/products"
+          className="text-sm text-gray-600 hover:text-black"
+        >
+          ← Back to products
+        </Link>
+      </div>
 
+      {/* TOP SECTION */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+        {/* IMAGE */}
+        <div className="relative w-full h-[420px] sm:h-[520px] lg:h-[650px] rounded-3xl overflow-hidden bg-gray-100">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            priority
+            className="object-contain"
+          />
+        </div>
+
+        {/* DETAILS */}
         <div>
-          <h1 className="text-2xl font-semibold">{product.title}</h1>
-
-          <p className="mt-4 text-gray-600">
-            Premium boutique design with tailoring support. Perfect for festive
-            and daily wear.
+          <p className="text-sm uppercase tracking-[0.18em] text-gray-500">
+            {product.category}
           </p>
 
-          <a
-            href={`https://wa.me/9779800000000?text=Hello, I want to order ${product.title}`}
-            target="_blank"
-            className="inline-block mt-6 bg-green-500 text-white px-6 py-3 rounded-full"
-          >
-            Order on WhatsApp
-          </a>
+          <h1 className="mt-2 text-3xl md:text-4xl font-bold">
+            {product.name}
+          </h1>
+
+          <p className="mt-4 text-2xl font-semibold">NPR {product.price}</p>
+
+          <p className="mt-6 text-gray-600 leading-7">
+            {product.description}
+          </p>
+
+          <div className="mt-8 rounded-3xl border p-6">
+            <h2 className="text-2xl font-semibold">Order this product</h2>
+            <p className="mt-3 text-gray-600 leading-7">
+              To order this item, send us a quick message on WhatsApp. We can
+              confirm availability, size, color, and delivery details there.
+            </p>
+
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center mt-6 rounded-xl bg-green-600 px-6 py-3 text-white font-medium hover:bg-green-700"
+            >
+              Order on WhatsApp
+            </a>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="rounded-2xl border p-4">
+              <p className="font-medium">Quality</p>
+              <p className="mt-2 text-sm text-gray-600">
+                Carefully selected fashion pieces.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border p-4">
+              <p className="font-medium">Support</p>
+              <p className="mt-2 text-sm text-gray-600">
+                Easy ordering and customer help.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border p-4">
+              <p className="font-medium">Style</p>
+              <p className="mt-2 text-sm text-gray-600">
+                Elegant looks for daily and festive wear.
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* RELATED PRODUCTS */}
+      {relatedProducts.length > 0 && (
+        <section className="mt-16">
+          <div className="mb-6 flex items-end justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.18em] text-gray-500">
+                More in this category
+              </p>
+              <h2 className="mt-2 text-2xl font-bold">Related Products</h2>
+            </div>
+
+            <Link
+              href={`/products?category=${product.category}`}
+              className="text-sm text-gray-600 hover:text-black"
+            >
+              View all
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {relatedProducts.map((item) => (
+              <div key={item.id} className="group">
+                <div className="relative h-[320px] w-full overflow-hidden rounded-2xl bg-gray-100">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-contain transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <p className="text-sm text-gray-500 capitalize">
+                    {item.category}
+                  </p>
+                  <h3 className="mt-1 text-lg font-semibold">{item.name}</h3>
+                  <p className="mt-1 text-sm text-gray-600">
+                    {item.description}
+                  </p>
+                  <p className="mt-3 font-semibold">NPR {item.price}</p>
+
+                  <Link
+                    href={`/products/${item.slug}`}
+                    className="inline-block mt-3 text-sm font-medium underline"
+                  >
+                    View Product →
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+    </main>
   );
 }

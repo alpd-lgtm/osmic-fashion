@@ -1,72 +1,202 @@
+import Image from "next/image";
 import Link from "next/link";
+import { products } from "@/lib/products";
 
-const productData = [
-  {
-    category: "Kurthas",
-    items: [
-      { slug: "kurtha-1", img: "/products/kurtha-1.avif", title: "Kurtha Style 1" },
-      { slug: "kurtha-2", img: "/products/kurtha-2.webp", title: "Kurtha Style 2" },
-      { slug: "kurtha-3", img: "/products/kurtha-3.jpg", title: "Kurtha Style 3" },
-      { slug: "kurtha-4", img: "/products/kurtha-4.jpg", title: "Kurtha Style 4" },
-      { slug: "kurtha-5", img: "/products/kurtha-5.jpg", title: "Kurtha Style 5" },
-      { slug: "kurtha-6", img: "/products/kurtha-6.jpg", title: "Kurtha Style 6" },
-    ],
-  },
-  {
-    category: "Sarees",
-    items: [
-      { slug: "saree-1", img: "/products/saree-1.webp", title: "Saree Style 1" },
-      { slug: "saree-2", img: "/products/saree-2.jpg", title: "Saree Style 2" },
-      { slug: "saree-3", img: "/products/saree-3.webp", title: "Saree Style 3" },
-      { slug: "saree-4", img: "/products/saree-4.webp", title: "Saree Style 4" },
-      { slug: "saree-5", img: "/products/saree-5.jpeg", title: "Saree Style 5" },
-      { slug: "saree-6", img: "/products/saree-6.webp", title: "Saree Style 6" },
-    ],
-  },
-  {
-    category: "Blouses & Tops",
-    items: [
-      { slug: "top-2", img: "/products/top-2.webp", title: "Top Style 1" },
-      { slug: "top-4", img: "/products/top-4.webp", title: "Top Style 2" },
-      { slug: "top-5", img: "/products/top-5.webp", title: "Top Style 3" },
-      { slug: "top-6", img: "/products/top-6.jpg", title: "Top Style 4" },
-    ],
-  },
-];
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string; search?: string }>;
+}) {
+  const params = await searchParams;
 
-export default function ProductsPage() {
+  const selectedCategory = params.category || "all";
+  const searchText = params.search?.toLowerCase().trim() || "";
+
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+
+    const matchesSearch =
+      searchText === "" ||
+      product.name.toLowerCase().includes(searchText) ||
+      product.description.toLowerCase().includes(searchText);
+
+    return matchesCategory && matchesSearch;
+  });
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-semibold mb-10">All Products</h1>
+    <main className="max-w-7xl mx-auto px-4 py-12">
+      <div className="mb-10">
+        <p className="text-sm uppercase tracking-[0.2em] text-gray-500">
+          Collection
+        </p>
+        <h1 className="mt-2 text-4xl font-bold">Our Products</h1>
+        <p className="mt-3 max-w-2xl text-gray-600">
+          Discover elegant fashion pieces with easy WhatsApp ordering.
+        </p>
+      </div>
 
-      {productData.map((group) => (
-        <div key={group.category} className="mb-14">
-          <h2 className="text-xl font-semibold mb-6 text-slate-800">
-            {group.category}
-          </h2>
+      <form
+        action="/products"
+        method="GET"
+        className="mb-10 rounded-3xl bg-gray-50 p-4 sm:p-5"
+      >
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_220px_140px]">
+          <input
+            type="text"
+            name="search"
+            defaultValue={params.search || ""}
+            placeholder="Search products..."
+            className="w-full rounded-2xl border border-transparent bg-white px-4 py-3 outline-none transition focus:border-black"
+          />
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {group.items.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/products/${item.slug}`}
-                className="group block rounded-2xl overflow-hidden border hover:shadow-lg transition"
-              >
-                <img
-                  src={item.img}
-                  className="h-72 w-full object-cover group-hover:scale-105 transition"
-                />
-                <div className="p-4">
-                  <h3 className="font-medium">{item.title}</h3>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Click to view details
-                  </p>
+          <select
+            name="category"
+            defaultValue={selectedCategory}
+            className="w-full rounded-2xl border border-transparent bg-white px-4 py-3 outline-none transition focus:border-black"
+          >
+            <option value="all">All</option>
+            <option value="kurtha">Kurthas</option>
+            <option value="saree">Sarees</option>
+            <option value="top">Tops</option>
+          </select>
+
+          <button
+            type="submit"
+            className="rounded-2xl bg-black px-5 py-3 text-white transition hover:opacity-90"
+          >
+            Apply
+          </button>
+        </div>
+      </form>
+
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-sm text-gray-600">
+          {filteredProducts.length} product
+          {filteredProducts.length !== 1 ? "s" : ""} found
+        </p>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href="/products"
+            className={`rounded-full px-4 py-2 text-sm transition ${
+              selectedCategory === "all" && !params.search
+                ? "bg-black text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            All
+          </Link>
+
+          <Link
+            href={`/products?category=kurtha${
+              params.search ? `&search=${encodeURIComponent(params.search)}` : ""
+            }`}
+            className={`rounded-full px-4 py-2 text-sm transition ${
+              selectedCategory === "kurtha"
+                ? "bg-black text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            Kurthas
+          </Link>
+
+          <Link
+            href={`/products?category=saree${
+              params.search ? `&search=${encodeURIComponent(params.search)}` : ""
+            }`}
+            className={`rounded-full px-4 py-2 text-sm transition ${
+              selectedCategory === "saree"
+                ? "bg-black text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            Sarees
+          </Link>
+
+          <Link
+            href={`/products?category=top${
+              params.search ? `&search=${encodeURIComponent(params.search)}` : ""
+            }`}
+            className={`rounded-full px-4 py-2 text-sm transition ${
+              selectedCategory === "top"
+                ? "bg-black text-white"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            Tops
+          </Link>
+
+          {(params.search || selectedCategory !== "all") && (
+            <Link
+              href="/products"
+              className="text-sm text-gray-600 underline underline-offset-4 hover:text-black"
+            >
+              Clear filters
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {filteredProducts.length === 0 ? (
+        <div className="rounded-3xl bg-gray-50 px-6 py-16 text-center">
+          <h2 className="text-2xl font-semibold">No products found</h2>
+          <p className="mt-3 text-gray-600">
+            Try changing your search or category.
+          </p>
+          <Link
+            href="/products"
+            className="inline-block mt-6 rounded-xl bg-black px-5 py-3 text-white"
+          >
+            View All Products
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredProducts.map((product) => (
+            <article key={product.id} className="group">
+              <Link href={`/products/${product.slug}`} className="block">
+                <div className="relative h-[380px] w-full overflow-hidden rounded-3xl bg-gray-100">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain transition duration-500 group-hover:scale-[1.03]"
+                  />
                 </div>
               </Link>
-            ))}
-          </div>
+
+              <div className="mt-5">
+                <p className="text-xs uppercase tracking-[0.18em] text-gray-500">
+                  {product.category}
+                </p>
+
+                <div className="mt-2 flex items-start justify-between gap-4">
+                  <h2 className="text-lg font-semibold leading-snug">
+                    <Link href={`/products/${product.slug}`}>
+                      {product.name}
+                    </Link>
+                  </h2>
+                  <p className="shrink-0 text-base font-semibold">
+                    NPR {product.price}
+                  </p>
+                </div>
+
+                <p className="mt-2 text-sm leading-6 text-gray-600">
+                  {product.description}
+                </p>
+
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="inline-block mt-4 text-sm font-medium underline underline-offset-4 hover:text-gray-700"
+                >
+                  View Product
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
-      ))}
-    </div>
+      )}
+    </main>
   );
 }
