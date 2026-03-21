@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CosmicHomepageUI() {
   const whatsappNumber = "9779800000000";
 
@@ -29,6 +31,7 @@ export default function CosmicHomepageUI() {
 
   const products = [
     {
+      slug: "red-festive-kurtha",
       title: "Red Festive Kurtha",
       price: "Rs. 3,950",
       tag: "Popular",
@@ -36,6 +39,7 @@ export default function CosmicHomepageUI() {
       img: "https://images.unsplash.com/photo-1603251579431-8041402bdeda?auto=format&fit=crop&w=1200&q=80",
     },
     {
+      slug: "celebration-saree",
       title: "Celebration Saree",
       price: "Rs. 6,800",
       tag: "Traditional",
@@ -43,6 +47,7 @@ export default function CosmicHomepageUI() {
       img: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=1200&q=80",
     },
     {
+      slug: "printed-ethnic-top",
       title: "Printed Ethnic Top",
       price: "Rs. 1,850",
       tag: "New",
@@ -53,58 +58,6 @@ export default function CosmicHomepageUI() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,#fffdfb_0%,#fff8f2_100%)] text-slate-800">
-      <div className="border-b border-slate-200 bg-gradient-to-r from-blue-900 to-red-700 px-4 py-2 text-center text-sm text-white">
-        Direct order available on WhatsApp · Store pickup and delivery in Kathmandu, Lalitpur & Bhaktapur
-      </div>
-
-      <header className="sticky top-0 z-20 border-b border-stone-200 bg-[#fcfaf7]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
-          <div className="flex flex-col leading-tight">
-            <span className="text-[11px] uppercase tracking-[0.22em] text-red-700">
-              Cosmic
-            </span>
-            <span className="text-base font-semibold tracking-[0.14em] text-blue-900 md:text-lg">
-              Fashion & Tailoring Centre
-            </span>
-          </div>
-
-          <nav className="hidden items-center gap-6 text-sm text-stone-600 md:flex">
-            <a href="#categories" className="hover:text-blue-900">
-              Collections
-            </a>
-            <a href="#products" className="hover:text-blue-900">
-              New Arrivals
-            </a>
-            <a href="#festive" className="hover:text-blue-900">
-              Festive
-            </a>
-            <a href="#contact" className="hover:text-blue-900">
-              Contact
-            </a>
-          </nav>
-
-          <a
-            href={createWhatsAppLink(
-              "Hello, I want to contact Cosmic Fashion & Tailoring Centre. Please share details."
-            )}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-green-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-green-600"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M20.52 3.48A11.86 11.86 0 0 0 12.02 0C5.39 0 .01 5.38.01 12c0 2.11.55 4.17 1.6 5.99L0 24l6.18-1.61A11.96 11.96 0 0 0 12.02 24c6.63 0 12.01-5.38 12.01-12 0-3.2-1.25-6.21-3.51-8.52zM12.02 21.8c-1.88 0-3.72-.5-5.33-1.45l-.38-.23-3.67.96.98-3.57-.25-.37A9.8 9.8 0 0 1 2.2 12c0-5.43 4.4-9.83 9.82-9.83 2.63 0 5.1 1.02 6.95 2.88A9.77 9.77 0 0 1 21.82 12c0 5.42-4.4 9.8-9.8 9.8zm5.37-7.37c-.29-.15-1.72-.85-1.98-.94-.26-.1-.45-.15-.64.15-.19.29-.73.94-.9 1.13-.17.19-.33.21-.62.07-.29-.15-1.23-.45-2.34-1.44-.86-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.15-.64-1.54-.88-2.11-.23-.55-.47-.47-.64-.48h-.55c-.19 0-.5.07-.76.36-.26.29-1 1-1 2.44s1.03 2.84 1.17 3.03c.14.19 2.01 3.07 4.88 4.3.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.72-.7 1.96-1.37.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34z" />
-            </svg>
-            WhatsApp
-          </a>
-        </div>
-      </header>
-
       <main>
         <section className="mx-auto grid max-w-7xl gap-6 px-4 py-6 md:grid-cols-2 md:py-10">
           <div className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm md:p-10">
@@ -122,16 +75,12 @@ export default function CosmicHomepageUI() {
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={createWhatsAppLink(
-                  "Hello, I want to shop your collection. Please share available products."
-                )}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href="/products"
                 className="rounded-full bg-red-700 px-6 py-3 font-medium text-white transition hover:bg-red-800"
               >
                 Shop Collection
-              </a>
+              </Link>
               <a
                 href={createWhatsAppLink(
                   "Hello, I want to book tailoring service. Please share the process."
@@ -222,8 +171,9 @@ export default function CosmicHomepageUI() {
 
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {categories.map((item) => (
-              <article
+              <Link
                 key={item.title}
+                href="/products"
                 className="group overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)]"
               >
                 <div className="relative overflow-hidden">
@@ -247,20 +197,11 @@ export default function CosmicHomepageUI() {
                     Boutique Category
                   </div>
 
-                  <div className="mt-4">
-                    <a
-                      href={createWhatsAppLink(
-                        `Hello, I want to view the ${item.title} collection. Please share available designs.`
-                      )}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-blue-900 transition hover:border-blue-200 hover:text-blue-950"
-                    >
-                      View Collection
-                    </a>
+                  <div className="mt-4 inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-blue-900 transition group-hover:border-blue-200 group-hover:text-blue-950">
+                    View Collection
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </section>
@@ -275,20 +216,19 @@ export default function CosmicHomepageUI() {
                 New arrivals
               </h2>
             </div>
-            <a
-              href={createWhatsAppLink("Hello, please share all new arrivals.")}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              href="/products"
               className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-blue-900 transition hover:border-blue-200 hover:text-blue-950"
             >
               View All
-            </a>
+            </Link>
           </div>
 
           <div className="grid gap-5 md:grid-cols-3">
             {products.map((item) => (
-              <article
-                key={item.title}
+              <Link
+                key={item.slug}
+                href={`/products/${item.slug}`}
                 className="group overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.10)]"
               >
                 <div className="relative overflow-hidden">
@@ -320,28 +260,12 @@ export default function CosmicHomepageUI() {
                     <div className="text-xs uppercase tracking-[0.22em] text-stone-400">
                       Boutique Pick
                     </div>
-                    <a
-                      href={createWhatsAppLink(
-                        `Hello, I want to order ${item.title} priced at ${item.price}. Please share availability.`
-                      )}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-green-500 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-green-600"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.02 0C5.39 0 .01 5.38.01 12c0 2.11.55 4.17 1.6 5.99L0 24l6.18-1.61A11.96 11.96 0 0 0 12.02 24c6.63 0 12.01-5.38 12.01-12 0-3.2-1.25-6.21-3.51-8.52zM12.02 21.8c-1.88 0-3.72-.5-5.33-1.45l-.38-.23-3.67.96.98-3.57-.25-.37A9.8 9.8 0 0 1 2.2 12c0-5.43 4.4-9.83 9.82-9.83 2.63 0 5.1 1.02 6.95 2.88A9.77 9.77 0 0 1 21.82 12c0 5.42-4.4 9.8-9.8 9.8zm5.37-7.37c-.29-.15-1.72-.85-1.98-.94-.26-.1-.45-.15-.64.15-.19.29-.73.94-.9 1.13-.17.19-.33.21-.62.07-.29-.15-1.23-.45-2.34-1.44-.86-.77-1.45-1.72-1.62-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.15-.64-1.54-.88-2.11-.23-.55-.47-.47-.64-.48h-.55c-.19 0-.5.07-.76.36-.26.29-1 1-1 2.44s1.03 2.84 1.17 3.03c.14.19 2.01 3.07 4.88 4.3.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.72-.7 1.96-1.37.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34z" />
-                      </svg>
-                      Order on WhatsApp
-                    </a>
+                    <div className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-blue-900 transition group-hover:border-blue-200 group-hover:text-blue-950">
+                      View Details
+                    </div>
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </section>
