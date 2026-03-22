@@ -1,45 +1,40 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function SiteHeader() {
-  const pathname = usePathname();
-
-  const isHome = pathname === "/";
-  const isProducts = pathname === "/products" || pathname.startsWith("/products/");
-
   return (
-    <header className="border-b border-gray-200">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-        <Link href="/" className="text-xl font-semibold tracking-wide">
-          Aawase
-        </Link>
+    <>
+      {/* Top accent line */}
+      <div className="h-1 w-full bg-[#C6922B]" />
 
-        <nav className="flex items-center gap-3 sm:gap-6">
+      {/* Top announcement bar */}
+      <div className="bg-[#7A1F2A] px-4 py-3 text-center text-sm font-medium tracking-[0.02em] text-[#FFF8F0] sm:text-base">
+        Direct order available on WhatsApp · Store pickup and delivery in
+        Kathmandu
+      </div>
+
+      {/* Main header */}
+      <header className="sticky top-0 z-50 border-b border-[#E8D7C0] bg-[#FFF9F2]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className={`rounded-full px-3 py-2 text-sm transition ${
-              isHome
-                ? "bg-black text-white"
-                : "text-gray-600 hover:text-black"
-            }`}
+            className="text-xl font-semibold tracking-[0.08em] text-[#7A1F2A]"
           >
-            Home
+            Aawase
           </Link>
 
-          <Link
-            href="/products"
-            className={`rounded-full px-3 py-2 text-sm transition ${
-              isProducts
-                ? "bg-black text-white"
-                : "text-gray-600 hover:text-black"
-            }`}
-          >
-            Products
-          </Link>
-        </nav>
-      </div>
-    </header>
+          <nav className="flex items-center gap-6 text-sm font-medium text-[#5C463D]">
+            <Link href="/" className="transition hover:text-[#7A1F2A]">
+              Home
+            </Link>
+            <Link
+              href="/products"
+              className="transition hover:text-[#7A1F2A]"
+            >
+              Products
+            </Link>
+          </nav>
+        </div>
+      </header>
+    </>
   );
 }

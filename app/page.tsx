@@ -6,104 +6,119 @@ export default function HomePage() {
   const featuredProducts = products.slice(0, 3);
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-12">
-      <section className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-        <div className="max-w-2xl">
-          <p className="text-sm uppercase tracking-[0.22em] text-gray-500">
-            Collection
-          </p>
+    <main className="mx-auto max-w-7xl bg-[#F8F1E7] px-4 py-10 sm:px-6 lg:px-8">
+      {/* HERO */}
+      <section className="relative overflow-hidden rounded-[2rem] bg-[#FDF8F2] px-6 py-10 shadow-sm ring-1 ring-[#E9D9C3] lg:px-10">
+        {/* Decorative background */}
+        <div className="pointer-events-none absolute -left-16 top-10 h-40 w-40 rounded-full bg-[#C6922B]/10 blur-3xl" />
+        <div className="pointer-events-none absolute right-10 top-16 h-56 w-56 rounded-full bg-[#7A1F2A]/10 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-[#7A1F2A]/5 blur-3xl" />
 
-          <h1 className="mt-4 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
-            Elegant fashion pieces for every occasion
-          </h1>
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="relative z-10 max-w-2xl">
+            <p className="text-xs uppercase tracking-[0.28em] text-[#C6922B]">
+              Traditional Collection
+            </p>
 
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Discover stylish kurthas, sarees, and tops with easy browsing and
-            direct WhatsApp ordering.
-          </p>
+            <h1 className="mt-4 text-4xl font-bold leading-tight text-[#2B1D18] sm:text-5xl lg:text-6xl">
+              Elegant fashion pieces inspired by timeless tradition
+            </h1>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/products"
-              className="rounded-xl bg-black px-6 py-3 text-white transition hover:opacity-90"
-            >
-              Shop All Products
-            </Link>
+            <p className="mt-6 max-w-xl text-base leading-7 text-[#5C463D] sm:text-lg sm:leading-8">
+              Discover graceful kurtas, sarees, and boutique styles crafted for
+              everyday elegance and festive occasions.
+            </p>
 
-            <Link
-              href="/products?category=kurtha"
-              className="rounded-xl border border-gray-300 bg-white px-6 py-3 transition hover:border-black"
-            >
-              Browse Kurthas
-            </Link>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/products"
+                className="rounded-xl bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#651822]"
+              >
+                Shop All Products
+              </Link>
+
+              <Link
+                href="/products?category=kurtha"
+                className="rounded-xl border border-[#7A1F2A] bg-white px-6 py-3 text-sm font-medium text-[#7A1F2A] transition hover:bg-[#F6ECE2]"
+              >
+                Browse Kurthas
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <div className="relative h-[360px] w-full overflow-hidden rounded-[2rem] bg-gray-50 sm:h-[440px] lg:h-[560px]">
-          <Image
-            src="/products/kurtha-1.avif"
-            alt="Featured fashion"
-            fill
-            priority
-            className="object-contain p-6 sm:p-8"
-          />
+          <div className="relative z-10">
+            <div className="absolute inset-0 scale-[0.92] rounded-[2rem] bg-[#7A1F2A]/6 blur-2xl" />
+            <div className="relative h-[340px] w-full overflow-hidden rounded-[2rem] border border-[#E6D3BA] bg-[#F6ECE2] shadow-sm sm:h-[420px] lg:h-[560px]">
+              <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/20 to-transparent" />
+              <Image
+                src="/products/kurtha-1.avif"
+                alt="Featured fashion"
+                fill
+                priority
+                className="object-contain p-6 sm:p-8"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="mt-16">
+      {/* FEATURED PRODUCTS */}
+      <section className="mt-20">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <p className="text-sm uppercase tracking-[0.2em] text-gray-500">
+            <p className="text-xs uppercase tracking-[0.28em] text-[#C6922B]">
               Featured
             </p>
-            <h2 className="mt-2 text-3xl font-bold">Featured Products</h2>
+            <h2 className="mt-2 text-2xl font-bold text-[#2B1D18] sm:text-3xl">
+              Featured Products
+            </h2>
           </div>
 
           <Link
             href="/products"
-            className="text-sm text-gray-600 underline underline-offset-4 hover:text-black"
+            className="text-sm font-medium text-[#7A1F2A] underline underline-offset-4 hover:text-[#651822]"
           >
             View all
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {featuredProducts.map((product) => (
-            <article key={product.id} className="group">
-              <Link href={`/products/${product.slug}`} className="block">
-                <div className="relative h-[360px] w-full overflow-hidden rounded-3xl bg-gray-100">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-contain transition duration-500 group-hover:scale-[1.03]"
-                  />
-                </div>
-              </Link>
+            <article
+              key={product.id}
+              className="group rounded-3xl bg-[#FFFDF9] p-4 shadow-sm ring-1 ring-[#EADBC6] transition hover:-translate-y-1 hover:shadow-md"
+            >
+              <div className="relative h-[320px] w-full overflow-hidden rounded-3xl bg-[#F6ECE2] ring-1 ring-[#E7D6C0] sm:h-[360px]">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
 
               <div className="mt-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-gray-500">
+                <p className="text-xs uppercase tracking-[0.18em] text-[#C6922B]">
                   {product.category}
                 </p>
 
                 <div className="mt-2 flex items-start justify-between gap-4">
-                  <h3 className="text-lg font-semibold leading-snug">
-                    <Link href={`/products/${product.slug}`}>
-                      {product.name}
-                    </Link>
+                  <h3 className="text-lg font-semibold leading-snug text-[#2B1D18]">
+                    {product.name}
                   </h3>
-                  <p className="shrink-0 text-base font-semibold">
+
+                  <p className="shrink-0 text-sm font-semibold text-[#7A1F2A] sm:text-base">
                     NPR {product.price}
                   </p>
                 </div>
 
-                <p className="mt-2 text-sm leading-6 text-gray-600">
+                <p className="mt-2 text-sm leading-6 text-[#5C463D]">
                   {product.description}
                 </p>
 
                 <Link
-                  href={`/products/${product.slug}`}
-                  className="inline-block mt-4 text-sm font-medium underline underline-offset-4 hover:text-gray-700"
+                  href="/products"
+                  className="mt-4 inline-block text-sm font-medium text-[#7A1F2A] underline underline-offset-4 hover:text-[#651822]"
                 >
                   View Product
                 </Link>
@@ -113,42 +128,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-3">
+      {/* CATEGORIES */}
+      <section className="mt-20 grid grid-cols-1 gap-4 md:grid-cols-3">
         <Link
           href="/products?category=kurtha"
-          className="rounded-3xl bg-gray-50 p-6 transition hover:bg-gray-100"
+          className="rounded-3xl bg-[#FFF9F2] p-6 ring-1 ring-[#E8D7C0] transition hover:bg-[#F8EFE5]"
         >
-          <p className="text-xs uppercase tracking-[0.18em] text-gray-500">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#C6922B]">
             Category
           </p>
-          <h3 className="mt-2 text-2xl font-semibold">Kurthas</h3>
-          <p className="mt-2 text-gray-600 leading-7">
+          <h3 className="mt-2 text-2xl font-semibold text-[#2B1D18]">
+            Kurthas
+          </h3>
+          <p className="mt-2 leading-7 text-[#5C463D]">
             Elegant daily and festive wear.
           </p>
         </Link>
 
         <Link
           href="/products?category=saree"
-          className="rounded-3xl bg-gray-50 p-6 transition hover:bg-gray-100"
+          className="rounded-3xl bg-[#FFF9F2] p-6 ring-1 ring-[#E8D7C0] transition hover:bg-[#F8EFE5]"
         >
-          <p className="text-xs uppercase tracking-[0.18em] text-gray-500">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#C6922B]">
             Category
           </p>
-          <h3 className="mt-2 text-2xl font-semibold">Sarees</h3>
-          <p className="mt-2 text-gray-600 leading-7">
+          <h3 className="mt-2 text-2xl font-semibold text-[#2B1D18]">
+            Sarees
+          </h3>
+          <p className="mt-2 leading-7 text-[#5C463D]">
             Graceful traditional fashion pieces.
           </p>
         </Link>
 
         <Link
           href="/products?category=top"
-          className="rounded-3xl bg-gray-50 p-6 transition hover:bg-gray-100"
+          className="rounded-3xl bg-[#FFF9F2] p-6 ring-1 ring-[#E8D7C0] transition hover:bg-[#F8EFE5]"
         >
-          <p className="text-xs uppercase tracking-[0.18em] text-gray-500">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#C6922B]">
             Category
           </p>
-          <h3 className="mt-2 text-2xl font-semibold">Tops</h3>
-          <p className="mt-2 text-gray-600 leading-7">
+          <h3 className="mt-2 text-2xl font-semibold text-[#2B1D18]">Tops</h3>
+          <p className="mt-2 leading-7 text-[#5C463D]">
             Modern styles for casual looks.
           </p>
         </Link>
