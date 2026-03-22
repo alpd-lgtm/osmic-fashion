@@ -25,13 +25,15 @@ export default async function ProductsPage({
   });
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-12">
-      <div className="mb-10">
-        <p className="text-sm uppercase tracking-[0.2em] text-gray-500">
+    <main className="mx-auto max-w-7xl bg-[#F8F1E7] px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mb-10 rounded-[2rem] bg-[#FDF8F2] px-6 py-8 shadow-sm ring-1 ring-[#E9D9C3] sm:px-8">
+        <p className="text-sm uppercase tracking-[0.2em] text-[#C6922B]">
           Collection
         </p>
-        <h1 className="mt-2 text-4xl font-bold">Our Products</h1>
-        <p className="mt-3 max-w-2xl text-gray-600">
+        <h1 className="mt-2 text-4xl font-bold text-[#2B1D18]">
+          Our Products
+        </h1>
+        <p className="mt-3 max-w-2xl text-[#5C463D]">
           Discover elegant fashion pieces with easy WhatsApp ordering.
         </p>
       </div>
@@ -39,7 +41,7 @@ export default async function ProductsPage({
       <form
         action="/products"
         method="GET"
-        className="mb-10 rounded-3xl bg-gray-50 p-4 sm:p-5"
+        className="mb-10 rounded-[2rem] bg-[#FFF9F2] p-4 shadow-sm ring-1 ring-[#E8D7C0] sm:p-5"
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_220px_140px]">
           <input
@@ -47,13 +49,13 @@ export default async function ProductsPage({
             name="search"
             defaultValue={params.search || ""}
             placeholder="Search products..."
-            className="w-full rounded-2xl border border-transparent bg-white px-4 py-3 outline-none transition focus:border-black"
+            className="w-full rounded-2xl border border-[#E8D7C0] bg-white px-4 py-3 text-[#2B1D18] outline-none transition focus:border-[#7A1F2A]"
           />
 
           <select
             name="category"
             defaultValue={selectedCategory}
-            className="w-full rounded-2xl border border-transparent bg-white px-4 py-3 outline-none transition focus:border-black"
+            className="w-full rounded-2xl border border-[#E8D7C0] bg-white px-4 py-3 text-[#2B1D18] outline-none transition focus:border-[#7A1F2A]"
           >
             <option value="all">All</option>
             <option value="kurtha">Kurthas</option>
@@ -63,7 +65,7 @@ export default async function ProductsPage({
 
           <button
             type="submit"
-            className="rounded-2xl bg-black px-5 py-3 text-white transition hover:opacity-90"
+            className="rounded-2xl bg-[#7A1F2A] px-5 py-3 text-white transition hover:bg-[#651822]"
           >
             Apply
           </button>
@@ -71,7 +73,7 @@ export default async function ProductsPage({
       </form>
 
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-[#5C463D]">
           {filteredProducts.length} product
           {filteredProducts.length !== 1 ? "s" : ""} found
         </p>
@@ -81,8 +83,8 @@ export default async function ProductsPage({
             href="/products"
             className={`rounded-full px-4 py-2 text-sm transition ${
               selectedCategory === "all" && !params.search
-                ? "bg-black text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                ? "bg-[#7A1F2A] text-white"
+                : "bg-[#FFF9F2] text-[#5C463D] ring-1 ring-[#E8D7C0] hover:bg-[#F6ECE2]"
             }`}
           >
             All
@@ -94,8 +96,8 @@ export default async function ProductsPage({
             }`}
             className={`rounded-full px-4 py-2 text-sm transition ${
               selectedCategory === "kurtha"
-                ? "bg-black text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                ? "bg-[#7A1F2A] text-white"
+                : "bg-[#FFF9F2] text-[#5C463D] ring-1 ring-[#E8D7C0] hover:bg-[#F6ECE2]"
             }`}
           >
             Kurthas
@@ -107,8 +109,8 @@ export default async function ProductsPage({
             }`}
             className={`rounded-full px-4 py-2 text-sm transition ${
               selectedCategory === "saree"
-                ? "bg-black text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                ? "bg-[#7A1F2A] text-white"
+                : "bg-[#FFF9F2] text-[#5C463D] ring-1 ring-[#E8D7C0] hover:bg-[#F6ECE2]"
             }`}
           >
             Sarees
@@ -120,8 +122,8 @@ export default async function ProductsPage({
             }`}
             className={`rounded-full px-4 py-2 text-sm transition ${
               selectedCategory === "top"
-                ? "bg-black text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                ? "bg-[#7A1F2A] text-white"
+                : "bg-[#FFF9F2] text-[#5C463D] ring-1 ring-[#E8D7C0] hover:bg-[#F6ECE2]"
             }`}
           >
             Tops
@@ -130,7 +132,7 @@ export default async function ProductsPage({
           {(params.search || selectedCategory !== "all") && (
             <Link
               href="/products"
-              className="text-sm text-gray-600 underline underline-offset-4 hover:text-black"
+              className="text-sm text-[#7A1F2A] underline underline-offset-4 hover:text-[#651822]"
             >
               Clear filters
             </Link>
@@ -139,14 +141,16 @@ export default async function ProductsPage({
       </div>
 
       {filteredProducts.length === 0 ? (
-        <div className="rounded-3xl bg-gray-50 px-6 py-16 text-center">
-          <h2 className="text-2xl font-semibold">No products found</h2>
-          <p className="mt-3 text-gray-600">
+        <div className="rounded-[2rem] bg-[#FFF9F2] px-6 py-16 text-center shadow-sm ring-1 ring-[#E8D7C0]">
+          <h2 className="text-2xl font-semibold text-[#2B1D18]">
+            No products found
+          </h2>
+          <p className="mt-3 text-[#5C463D]">
             Try changing your search or category.
           </p>
           <Link
             href="/products"
-            className="inline-block mt-6 rounded-xl bg-black px-5 py-3 text-white"
+            className="mt-6 inline-block rounded-xl bg-[#7A1F2A] px-5 py-3 text-white transition hover:bg-[#651822]"
           >
             View All Products
           </Link>
@@ -154,41 +158,44 @@ export default async function ProductsPage({
       ) : (
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProducts.map((product) => (
-            <article key={product.id} className="group">
+            <article
+              key={product.id}
+              className="group rounded-3xl bg-[#FFFDF9] p-4 shadow-sm ring-1 ring-[#EADBC6] transition hover:-translate-y-1 hover:shadow-md"
+            >
               <Link href={`/products/${product.slug}`} className="block">
-                <div className="relative h-[380px] w-full overflow-hidden rounded-3xl bg-gray-100">
+                <div className="relative h-[380px] w-full overflow-hidden rounded-3xl bg-[#F6ECE2] ring-1 ring-[#E7D6C0]">
                   <Image
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-contain transition duration-500 group-hover:scale-[1.03]"
+                    className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
               </Link>
 
               <div className="mt-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-gray-500">
+                <p className="text-xs uppercase tracking-[0.18em] text-[#C6922B]">
                   {product.category}
                 </p>
 
                 <div className="mt-2 flex items-start justify-between gap-4">
-                  <h2 className="text-lg font-semibold leading-snug">
+                  <h2 className="text-lg font-semibold leading-snug text-[#2B1D18]">
                     <Link href={`/products/${product.slug}`}>
                       {product.name}
                     </Link>
                   </h2>
-                  <p className="shrink-0 text-base font-semibold">
+                  <p className="shrink-0 text-base font-semibold text-[#7A1F2A]">
                     NPR {product.price}
                   </p>
                 </div>
 
-                <p className="mt-2 text-sm leading-6 text-gray-600">
+                <p className="mt-2 text-sm leading-6 text-[#5C463D]">
                   {product.description}
                 </p>
 
                 <Link
                   href={`/products/${product.slug}`}
-                  className="inline-block mt-4 text-sm font-medium underline underline-offset-4 hover:text-gray-700"
+                  className="mt-4 inline-block text-sm font-medium text-[#7A1F2A] underline underline-offset-4 hover:text-[#651822]"
                 >
                   View Product
                 </Link>
