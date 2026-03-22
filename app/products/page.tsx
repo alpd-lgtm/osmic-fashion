@@ -2,91 +2,177 @@ import Image from "next/image";
 import Link from "next/link";
 import { products } from "@/lib/products";
 
-export default function HomePage() {
-  const featuredProducts = products.slice(0, 3);
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string; search?: string }>;
+}) {
+  const params = await searchParams;
+
+  const selectedCategory = params.category || "all";
+  const searchText = params.search?.toLowerCase().trim() || "";
+
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "all" || product.category === selectedCategory;
+
+    const matchesSearch =
+      searchText === "" ||
+      product.name.toLowerCase().includes(searchText) ||
+      product.description.toLowerCase().includes(searchText);
+
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <main className="mx-auto max-w-7xl bg-white px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-      {/* HERO */}
-      <section className="grid grid-cols-1 items-center gap-8 rounded-[2rem] bg-[#FFFDFC] px-5 py-8 ring-1 ring-gray-100 sm:px-6 sm:py-10 lg:grid-cols-2 lg:gap-16 lg:px-10">
-        <div className="max-w-2xl">
-          <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A] sm:text-xs sm:tracking-[0.32em]">
-            New Collection
-          </p>
+    <main className="mx-auto max-w-7xl bg-white px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mb-10 rounded-[2rem] bg-[#FFFDFC] px-6 py-8 ring-1 ring-gray-100 sm:px-8">
+        <p className="text-sm uppercase tracking-[0.2em] text-[#7A1F2A]">
+          Collection
+        </p>
+        <h1 className="mt-2 text-4xl font-bold text-[#111111]">
+          Our Products
+        </h1>
+        <p className="mt-3 max-w-2xl text-gray-600">
+          Discover elegant fashion pieces with a clean and simple shopping
+          experience.
+        </p>
+      </div>
 
-          <div className="mt-3 h-px w-20 bg-[#7A1F2A] sm:mt-4 sm:w-24" />
-
-          <h1 className="mt-5 max-w-xl text-3xl font-bold leading-tight text-[#111111] sm:mt-6 sm:text-5xl lg:text-6xl">
-            Elegant fashion pieces for every occasion
-          </h1>
-
-          <p className="mt-5 max-w-lg text-base leading-8 text-gray-600 sm:mt-6 sm:text-lg sm:leading-8">
-            Discover graceful kurtas, sarees, and modern boutique styles with a
-            clean and simple shopping experience.
-          </p>
-
-          <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/products"
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[#7A1F2A] px-6 py-3 text-base font-medium text-white transition hover:opacity-90 sm:text-sm"
-            >
-              Shop All Products
-            </Link>
-
-            <Link
-              href="/products?category=kurtha"
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-base font-medium text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A] sm:text-sm"
-            >
-              Browse Kurthas
-            </Link>
-          </div>
-        </div>
-
-        <div className="relative h-[260px] w-full overflow-hidden rounded-[2rem] bg-white ring-1 ring-gray-100 sm:h-[420px] lg:h-[560px]">
-          <Image
-            src="/products/kurtha-1.avif"
-            alt="Featured fashion"
-            fill
-            priority
-            className="object-contain p-4 sm:p-8"
+      <form
+        action="/products"
+        method="GET"
+        className="mb-10 rounded-[2rem] bg-[#FFFDFC] p-4 ring-1 ring-gray-100 sm:p-5"
+      >
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_220px_140px]">
+          <input
+            type="text"
+            name="search"
+            defaultValue={params.search || ""}
+            placeholder="Search products..."
+            className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[#111111] outline-none transition focus:border-[#7A1F2A]"
           />
+
+          <select
+            name="category"
+            defaultValue={selectedCategory}
+            className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[#111111] outline-none transition focus:border-[#7A1F2A]"
+          >
+            <option value="all">All</option>
+            <option value="kurtha">Kurthas</option>
+            <option value="saree">Sarees</option>
+            <option value="top">Tops</option>
+          </select>
+
+          <button
+            type="submit"
+            className="rounded-2xl bg-[#7A1F2A] px-5 py-3 text-white transition hover:opacity-90"
+          >
+            Apply
+          </button>
         </div>
-      </section>
+      </form>
 
-      {/* FEATURED PRODUCTS */}
-      <section className="mt-16 sm:mt-20">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
-              Featured
-            </p>
-            <h2 className="mt-2 text-2xl font-bold text-[#111111] sm:text-3xl">
-              Featured Products
-            </h2>
-          </div>
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-sm text-gray-600">
+          {filteredProducts.length} product
+          {filteredProducts.length !== 1 ? "s" : ""} found
+        </p>
 
+        <div className="flex flex-wrap items-center gap-3">
           <Link
             href="/products"
-            className="text-sm font-medium text-gray-600 underline underline-offset-4 hover:text-[#7A1F2A]"
+            className={`rounded-full px-4 py-2 text-sm transition ${
+              selectedCategory === "all" && !params.search
+                ? "bg-[#7A1F2A] text-white"
+                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+            }`}
           >
-            View all
+            All
+          </Link>
+
+          <Link
+            href={`/products?category=kurtha${
+              params.search ? `&search=${encodeURIComponent(params.search)}` : ""
+            }`}
+            className={`rounded-full px-4 py-2 text-sm transition ${
+              selectedCategory === "kurtha"
+                ? "bg-[#7A1F2A] text-white"
+                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+            }`}
+          >
+            Kurthas
+          </Link>
+
+          <Link
+            href={`/products?category=saree${
+              params.search ? `&search=${encodeURIComponent(params.search)}` : ""
+            }`}
+            className={`rounded-full px-4 py-2 text-sm transition ${
+              selectedCategory === "saree"
+                ? "bg-[#7A1F2A] text-white"
+                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+            }`}
+          >
+            Sarees
+          </Link>
+
+          <Link
+            href={`/products?category=top${
+              params.search ? `&search=${encodeURIComponent(params.search)}` : ""
+            }`}
+            className={`rounded-full px-4 py-2 text-sm transition ${
+              selectedCategory === "top"
+                ? "bg-[#7A1F2A] text-white"
+                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+            }`}
+          >
+            Tops
+          </Link>
+
+          {(params.search || selectedCategory !== "all") && (
+            <Link
+              href="/products"
+              className="text-sm text-[#7A1F2A] underline underline-offset-4 hover:opacity-80"
+            >
+              Clear filters
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {filteredProducts.length === 0 ? (
+        <div className="rounded-[2rem] bg-[#FFFDFC] px-6 py-16 text-center ring-1 ring-gray-100">
+          <h2 className="text-2xl font-semibold text-[#111111]">
+            No products found
+          </h2>
+          <p className="mt-3 text-gray-600">
+            Try changing your search or category.
+          </p>
+          <Link
+            href="/products"
+            className="mt-6 inline-block rounded-xl bg-[#7A1F2A] px-5 py-3 text-white transition hover:opacity-90"
+          >
+            View All Products
           </Link>
         </div>
-
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredProducts.map((product) => (
+      ) : (
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredProducts.map((product) => (
             <article
               key={product.id}
               className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md"
             >
-              <div className="relative h-[320px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[360px]">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
-                />
-              </div>
+              <Link href={`/products/${product.slug}`} className="block">
+                <div className="relative h-[380px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+              </Link>
 
               <div className="mt-5">
                 <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
@@ -94,11 +180,12 @@ export default function HomePage() {
                 </p>
 
                 <div className="mt-2 flex items-start justify-between gap-4">
-                  <h3 className="text-lg font-semibold leading-snug text-[#111111]">
-                    {product.name}
-                  </h3>
-
-                  <p className="shrink-0 text-sm font-semibold text-[#7A1F2A] sm:text-base">
+                  <h2 className="text-lg font-semibold leading-snug text-[#111111]">
+                    <Link href={`/products/${product.slug}`}>
+                      {product.name}
+                    </Link>
+                  </h2>
+                  <p className="shrink-0 text-base font-semibold text-[#7A1F2A]">
                     NPR {product.price}
                   </p>
                 </div>
@@ -108,7 +195,7 @@ export default function HomePage() {
                 </p>
 
                 <Link
-                  href="/products"
+                  href={`/products/${product.slug}`}
                   className="mt-4 inline-block text-sm font-medium text-[#111111] underline underline-offset-4 hover:text-[#7A1F2A]"
                 >
                   View Product
@@ -117,53 +204,7 @@ export default function HomePage() {
             </article>
           ))}
         </div>
-      </section>
-
-      {/* CATEGORIES */}
-      <section className="mt-16 grid grid-cols-1 gap-4 md:mt-20 md:grid-cols-3">
-        <Link
-          href="/products?category=kurtha"
-          className="rounded-3xl bg-[#FAF7F3] p-6 ring-1 ring-gray-100 transition hover:bg-white hover:shadow-sm"
-        >
-          <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
-            Category
-          </p>
-          <h3 className="mt-2 text-2xl font-semibold text-[#111111]">
-            Kurthas
-          </h3>
-          <p className="mt-2 leading-7 text-gray-600">
-            Elegant daily and festive wear.
-          </p>
-        </Link>
-
-        <Link
-          href="/products?category=saree"
-          className="rounded-3xl bg-[#FAF7F3] p-6 ring-1 ring-gray-100 transition hover:bg-white hover:shadow-sm"
-        >
-          <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
-            Category
-          </p>
-          <h3 className="mt-2 text-2xl font-semibold text-[#111111]">
-            Sarees
-          </h3>
-          <p className="mt-2 leading-7 text-gray-600">
-            Graceful traditional fashion pieces.
-          </p>
-        </Link>
-
-        <Link
-          href="/products?category=top"
-          className="rounded-3xl bg-[#FAF7F3] p-6 ring-1 ring-gray-100 transition hover:bg-white hover:shadow-sm"
-        >
-          <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
-            Category
-          </p>
-          <h3 className="mt-2 text-2xl font-semibold text-[#111111]">Tops</h3>
-          <p className="mt-2 leading-7 text-gray-600">
-            Modern styles for casual looks.
-          </p>
-        </Link>
-      </section>
+      )}
     </main>
   );
 }

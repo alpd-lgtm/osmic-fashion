@@ -6,55 +6,55 @@ export default function HomePage() {
   const featuredProducts = products.slice(0, 3);
 
   return (
-    <main className="mx-auto max-w-7xl bg-white px-4 py-10 sm:px-6 lg:px-8">
+    <main className="mx-auto max-w-7xl bg-white px-4 py-4 sm:px-6 sm:py-10 lg:px-8">
       {/* HERO */}
-      <section className="grid grid-cols-1 items-center gap-10 rounded-[2rem] bg-[#FAF7F3] px-6 py-10 ring-1 ring-gray-100 lg:grid-cols-2 lg:gap-16 lg:px-10">
+      <section className="grid grid-cols-1 items-center gap-6 rounded-[2rem] bg-[#FFFDFC] px-5 py-6 ring-1 ring-gray-100 sm:px-6 sm:py-10 lg:grid-cols-2 lg:gap-16 lg:px-10">
         <div className="max-w-2xl">
-          <p className="text-xs uppercase tracking-[0.32em] text-[#7A1F2A]">
+          <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A] sm:text-xs sm:tracking-[0.32em]">
             New Collection
           </p>
 
-          <div className="mt-4 h-px w-24 bg-[#7A1F2A]" />
+          <div className="mt-3 h-px w-20 bg-[#7A1F2A] sm:mt-4 sm:w-24" />
 
-          <h1 className="mt-6 max-w-xl text-4xl font-bold leading-tight text-[#111111] sm:text-5xl lg:text-6xl">
+          <h1 className="mt-5 max-w-xl text-3xl font-bold leading-tight text-[#111111] sm:mt-6 sm:text-5xl lg:text-6xl">
             Elegant fashion pieces for every occasion
           </h1>
 
-          <p className="mt-6 max-w-lg text-base leading-7 text-gray-600 sm:text-lg sm:leading-8">
+          <p className="mt-5 max-w-lg text-base leading-8 text-gray-600 sm:mt-6 sm:text-lg sm:leading-8">
             Discover graceful kurtas, sarees, and modern boutique styles with a
             clean and simple shopping experience.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
             <Link
               href="/products"
-              className="rounded-xl bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[#7A1F2A] px-6 py-3 text-base font-medium text-white transition hover:opacity-90 sm:text-sm"
             >
               Shop All Products
             </Link>
 
             <Link
               href="/products?category=kurtha"
-              className="rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-base font-medium text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A] sm:text-sm"
             >
               Browse Kurthas
             </Link>
           </div>
         </div>
 
-        <div className="relative h-[340px] w-full overflow-hidden rounded-[2rem] bg-white ring-1 ring-gray-100 sm:h-[420px] lg:h-[560px]">
+        <div className="relative h-[260px] w-full overflow-hidden rounded-[2rem] bg-white ring-1 ring-gray-100 sm:h-[420px] lg:h-[560px]">
           <Image
             src="/products/kurtha-1.avif"
             alt="Featured fashion"
             fill
             priority
-            className="object-contain p-6 sm:p-8"
+            className="object-contain p-4 sm:p-8"
           />
         </div>
       </section>
 
       {/* FEATURED PRODUCTS */}
-      <section className="mt-20">
+      <section className="mt-16 sm:mt-20">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
@@ -120,7 +120,7 @@ export default function HomePage() {
       </section>
 
       {/* CATEGORIES */}
-      <section className="mt-20 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <section className="mt-16 grid grid-cols-1 gap-4 md:mt-20 md:grid-cols-3">
         <Link
           href="/products?category=kurtha"
           className="rounded-3xl bg-[#FAF7F3] p-6 ring-1 ring-gray-100 transition hover:bg-white hover:shadow-sm"
