@@ -44,7 +44,7 @@ export default function HomePage() {
 
         <div className="relative h-[280px] w-full overflow-hidden rounded-[2rem] bg-neutral-100 ring-1 ring-gray-100 sm:h-[420px] lg:h-[560px]">
           <Image
-            src="/products/kurtha-1.avif"
+            src="/products/hero.jpg"
             alt="Featured fashion"
             fill
             priority
