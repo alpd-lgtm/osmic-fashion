@@ -8,48 +8,53 @@ export default function HomePage() {
   return (
     <main className="mx-auto max-w-7xl bg-white px-4 py-4 sm:px-6 sm:py-10 lg:px-8">
       {/* HERO */}
-      <section className="grid grid-cols-1 items-center gap-6 rounded-[2rem] bg-[#FFFDFC] px-5 py-6 ring-1 ring-gray-100 sm:px-6 sm:py-10 lg:grid-cols-2 lg:gap-16 lg:px-10">
-        <div className="max-w-2xl">
-          <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A] sm:text-xs sm:tracking-[0.32em]">
-            New Collection
-          </p>
-
-          <div className="mt-3 h-px w-20 bg-[#7A1F2A] sm:mt-4 sm:w-24" />
-
-          <h1 className="mt-5 max-w-xl text-3xl font-bold leading-tight text-[#111111] sm:mt-6 sm:text-5xl lg:text-6xl">
-            Elegant fashion pieces for every occasion
-          </h1>
-
-          <p className="mt-5 max-w-lg text-base leading-8 text-gray-600 sm:mt-6 sm:text-lg sm:leading-8">
-            Discover graceful kurtas, sarees, and modern boutique styles with a
-            clean and simple shopping experience.
-          </p>
-
-          <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/products"
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl bg-[#7A1F2A] px-6 py-3 text-base font-medium text-white transition hover:opacity-90 sm:text-sm"
-            >
-              Shop All Products
-            </Link>
-
-            <Link
-              href="/products?category=kurtha"
-              className="inline-flex min-h-[52px] items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-base font-medium text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A] sm:text-sm"
-            >
-              Browse Kurthas
-            </Link>
-          </div>
-        </div>
-
-        <div className="relative h-[280px] w-full overflow-hidden rounded-[2rem] bg-neutral-100 ring-1 ring-gray-100 sm:h-[420px] lg:h-[560px]">
+      <section className="relative overflow-hidden rounded-[2rem]">
+        <div className="relative h-[520px] w-full sm:h-[600px] lg:h-[720px]">
           <Image
             src="/products/hero.jpg"
-            alt="Featured fashion"
+            alt="Elegant fashion model"
             fill
             priority
-            className="object-cover"
+            className="object-cover object-top"
           />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+
+        <div className="absolute inset-0 flex items-center">
+          <div className="mx-auto w-full max-w-7xl px-6">
+            <div className="max-w-xl text-white">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/80 sm:text-sm">
+                New Collection
+              </p>
+
+              <div className="mt-3 h-px w-20 bg-white/70 sm:w-24" />
+
+              <h1 className="mt-5 text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+                Elegant fashion pieces for every occasion
+              </h1>
+
+              <p className="mt-5 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">
+                Discover graceful kurtas, sarees, and modern boutique styles
+                with a clean and simple shopping experience.
+              </p>
+
+              <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
+                <Link
+                  href="/products"
+                  className="inline-flex min-h-[52px] items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-medium text-[#111111] transition hover:opacity-90"
+                >
+                  Shop All Products
+                </Link>
+
+                <Link
+                  href="/products?category=kurtha"
+                  className="inline-flex min-h-[52px] items-center justify-center rounded-2xl border border-white/60 px-6 py-3 text-sm font-medium text-white transition hover:bg-white hover:text-[#111111]"
+                >
+                  Browse Kurthas
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -79,14 +84,16 @@ export default function HomePage() {
               key={product.id}
               className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md hover:ring-[#7A1F2A]/20"
             >
-              <div className="relative h-[320px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[360px]">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
-                />
-              </div>
+              <Link href={`/products/${product.slug}`} className="block">
+                <div className="relative h-[320px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[360px]">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+              </Link>
 
               <div className="mt-5">
                 <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
@@ -95,7 +102,9 @@ export default function HomePage() {
 
                 <div className="mt-2 flex items-start justify-between gap-4">
                   <h3 className="text-lg font-semibold leading-snug text-[#111111]">
-                    {product.name}
+                    <Link href={`/products/${product.slug}`}>
+                      {product.name}
+                    </Link>
                   </h3>
 
                   <p className="shrink-0 text-sm font-semibold text-[#111111] sm:text-base">
