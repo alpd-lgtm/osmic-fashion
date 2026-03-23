@@ -3,7 +3,7 @@ import Link from "next/link";
 import { products } from "@/lib/products";
 
 export default function HomePage() {
-  const featuredProducts = products.slice(0, 3);
+  const featuredProducts = products.slice(0, 4);
 
   return (
     <main className="mx-auto max-w-7xl bg-white px-4 py-4 sm:px-6 sm:py-10 lg:px-8">
@@ -42,19 +42,19 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative h-[260px] w-full overflow-hidden rounded-[2rem] bg-white ring-1 ring-gray-100 sm:h-[420px] lg:h-[560px]">
+        <div className="relative h-[280px] w-full overflow-hidden rounded-[2rem] bg-neutral-100 ring-1 ring-gray-100 sm:h-[420px] lg:h-[560px]">
           <Image
             src="/products/kurtha-1.avif"
             alt="Featured fashion"
             fill
             priority
-            className="object-contain p-4 sm:p-8"
+            className="object-cover"
           />
         </div>
       </section>
 
       {/* FEATURED PRODUCTS */}
-      <section className="mt-16 sm:mt-20">
+      <section className="mt-16 rounded-[2rem] bg-[#FCFAF8] px-4 py-10 sm:mt-20 sm:px-6">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
@@ -73,11 +73,11 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {featuredProducts.map((product) => (
             <article
               key={product.id}
-              className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md"
+              className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md hover:ring-[#7A1F2A]/20"
             >
               <div className="relative h-[320px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[360px]">
                 <Image
@@ -98,7 +98,7 @@ export default function HomePage() {
                     {product.name}
                   </h3>
 
-                  <p className="shrink-0 text-sm font-semibold text-[#7A1F2A] sm:text-base">
+                  <p className="shrink-0 text-sm font-semibold text-[#111111] sm:text-base">
                     NPR {product.price}
                   </p>
                 </div>
@@ -108,7 +108,7 @@ export default function HomePage() {
                 </p>
 
                 <Link
-                  href="/products"
+                  href={`/products/${product.slug}`}
                   className="mt-4 inline-block text-sm font-medium text-[#111111] underline underline-offset-4 hover:text-[#7A1F2A]"
                 >
                   View Product
@@ -134,6 +134,7 @@ export default function HomePage() {
           <p className="mt-2 leading-7 text-gray-600">
             Elegant daily and festive wear.
           </p>
+          <div className="mt-4 h-1 w-10 bg-[#7A1F2A]" />
         </Link>
 
         <Link
@@ -149,6 +150,7 @@ export default function HomePage() {
           <p className="mt-2 leading-7 text-gray-600">
             Graceful traditional fashion pieces.
           </p>
+          <div className="mt-4 h-1 w-10 bg-[#7A1F2A]" />
         </Link>
 
         <Link
@@ -162,7 +164,38 @@ export default function HomePage() {
           <p className="mt-2 leading-7 text-gray-600">
             Modern styles for casual looks.
           </p>
+          <div className="mt-4 h-1 w-10 bg-[#7A1F2A]" />
         </Link>
+      </section>
+
+      {/* TRUST SECTION */}
+      <section className="mt-16 grid grid-cols-1 gap-4 pb-10 md:grid-cols-3">
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100">
+          <h3 className="text-lg font-semibold text-[#111111]">
+            Quality Fabric
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-gray-600">
+            Elegant pieces selected for comfort, style, and long-lasting wear.
+          </p>
+        </div>
+
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100">
+          <h3 className="text-lg font-semibold text-[#111111]">
+            Kathmandu Delivery
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-gray-600">
+            Easy ordering with local delivery and simple purchase support.
+          </p>
+        </div>
+
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100">
+          <h3 className="text-lg font-semibold text-[#111111]">
+            Easy Ordering
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-gray-600">
+            Shop online and order quickly through your preferred contact method.
+          </p>
+        </div>
       </section>
     </main>
   );

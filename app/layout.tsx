@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fashion Store",
+  title: "Aawase",
   description: "Elegant fashion pieces for every occasion",
 };
 
@@ -33,21 +33,21 @@ export default function RootLayout({
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
 
-          <div className="flex-1">{children}</div>
+          <main className="flex-1">{children}</main>
 
-          <footer className="mt-20 border-t border-gray-200 bg-[#FAF7F3] text-[#111111]">
+          <footer className="mt-16 border-t border-gray-200 bg-white text-[#111111]">
             <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 gap-10 md:grid-cols-[1.3fr_0.8fr_1fr]">
+              <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
                 <div>
                   <p className="text-sm uppercase tracking-[0.2em] text-[#7A1F2A]">
                     Aawase
                   </p>
                   <h3 className="mt-3 text-2xl font-semibold">
-                    Elegant fashion with easy ordering
+                    Elegant fashion for every occasion
                   </h3>
                   <p className="mt-4 max-w-md text-sm leading-7 text-gray-600">
-                    Explore curated fashion pieces and order directly through
-                    WhatsApp for product details, availability, and delivery.
+                    Discover boutique styles with a clean and simple shopping
+                    experience.
                   </p>
                 </div>
 
@@ -58,13 +58,13 @@ export default function RootLayout({
                   <div className="mt-4 flex flex-col gap-3 text-sm">
                     <Link
                       href="/"
-                      className="text-gray-600 hover:text-[#7A1F2A]"
+                      className="text-gray-600 transition hover:text-[#7A1F2A]"
                     >
                       Home
                     </Link>
                     <Link
                       href="/products"
-                      className="text-gray-600 hover:text-[#7A1F2A]"
+                      className="text-gray-600 transition hover:text-[#7A1F2A]"
                     >
                       Products
                     </Link>
@@ -76,8 +76,8 @@ export default function RootLayout({
                     Contact
                   </p>
                   <p className="mt-4 text-sm leading-7 text-gray-600">
-                    For orders and inquiries, connect through WhatsApp from any
-                    product page.
+                    Direct order available on WhatsApp with store pickup and
+                    delivery in Kathmandu.
                   </p>
                 </div>
               </div>
