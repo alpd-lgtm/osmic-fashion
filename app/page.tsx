@@ -11,123 +11,231 @@ export default function HomePage() {
       <HeroSlider />
 
       {/* FEATURED PRODUCTS */}
-      <section className="mt-16 rounded-[2rem] bg-[#FCFAF8] px-4 py-10 sm:mt-20 sm:px-6">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
-              Featured
+<section className="mt-16 rounded-[2rem] bg-[#FCFAF8] px-4 py-10 sm:mt-20 sm:px-6">
+  <div className="mb-8 flex items-end justify-between gap-4">
+    <div>
+      <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
+        Featured
+      </p>
+      <h2 className="mt-2 text-2xl font-bold text-[#111111] sm:text-3xl">
+        Featured Products
+      </h2>
+    </div>
+
+    <Link
+      href="/products"
+      className="text-sm font-medium text-gray-600 underline underline-offset-4 hover:text-[#7A1F2A]"
+    >
+      View all
+    </Link>
+  </div>
+
+  {/* MOBILE: horizontal scroll */}
+ <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth lg:hidden">
+    {featuredProducts.map((product) => (
+      <article
+        key={product.id}
+        className="group min-w-[260px] flex-shrink-0 snap-start rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:shadow-md"
+      >
+        <Link href={`/products/${product.slug}`} className="block">
+          <div className="relative h-[280px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100">
+            <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[11px] font-medium text-white">
+              New
+            </span>
+
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
+            />
+          </div>
+        </Link>
+
+        <div className="mt-4">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[#7A1F2A]">
+            {product.category}
+          </p>
+
+          <div className="mt-2 flex items-start justify-between gap-3">
+            <h3 className="text-base font-semibold leading-snug text-[#111111]">
+              <Link href={`/products/${product.slug}`}>{product.name}</Link>
+            </h3>
+
+            <p className="shrink-0 text-sm font-semibold text-[#111111]">
+              NPR {product.price}
             </p>
-            <h2 className="mt-2 text-2xl font-bold text-[#111111] sm:text-3xl">
-              Featured Products
-            </h2>
           </div>
 
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
+            {product.description}
+          </p>
+
           <Link
-            href="/products"
-            className="text-sm font-medium text-gray-600 underline underline-offset-4 hover:text-[#7A1F2A]"
+            href={`/products/${product.slug}`}
+            className="mt-4 inline-block text-sm font-medium text-[#111111] underline underline-offset-4 hover:text-[#7A1F2A]"
           >
-            View all
+            View Product
           </Link>
         </div>
+      </article>
+    ))}
+  </div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredProducts.map((product) => (
-            <article
-              key={product.id}
-              className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md hover:ring-[#7A1F2A]/20"
-            >
-              <Link href={`/products/${product.slug}`} className="block">
-                <div className="relative h-[320px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[360px]">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
-                  />
-                </div>
-              </Link>
+  {/* DESKTOP: grid */}
+  <div className="hidden grid-cols-2 gap-8 lg:grid xl:grid-cols-4">
+    {featuredProducts.map((product) => (
+      <article
+        key={product.id}
+        className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md hover:ring-[#7A1F2A]/20"
+      >
+        <Link href={`/products/${product.slug}`} className="block">
+          <div className="relative h-[320px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[360px]">
+            <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[11px] font-medium text-white">
+              New
+            </span>
 
-              <div className="mt-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
-                  {product.category}
-                </p>
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
+            />
+          </div>
+        </Link>
 
-                <div className="mt-2 flex items-start justify-between gap-4">
-                  <h3 className="text-lg font-semibold leading-snug text-[#111111]">
-                    <Link href={`/products/${product.slug}`}>
-                      {product.name}
-                    </Link>
-                  </h3>
+        <div className="mt-5">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
+            {product.category}
+          </p>
 
-                  <p className="shrink-0 text-sm font-semibold text-[#111111] sm:text-base">
-                    NPR {product.price}
-                  </p>
-                </div>
+          <div className="mt-2 flex items-start justify-between gap-4">
+            <h3 className="text-lg font-semibold leading-snug text-[#111111]">
+              <Link href={`/products/${product.slug}`}>{product.name}</Link>
+            </h3>
 
-                <p className="mt-2 text-sm leading-6 text-gray-600">
-                  {product.description}
-                </p>
+            <p className="shrink-0 text-sm font-semibold text-[#111111] sm:text-base">
+              NPR {product.price}
+            </p>
+          </div>
 
-                <Link
-                  href={`/products/${product.slug}`}
-                  className="mt-4 inline-block text-sm font-medium text-[#111111] underline underline-offset-4 hover:text-[#7A1F2A]"
-                >
-                  View Product
-                </Link>
-              </div>
-            </article>
-          ))}
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
+            {product.description}
+          </p>
+
+          <Link
+            href={`/products/${product.slug}`}
+            className="mt-4 inline-block text-sm font-medium text-[#111111] underline underline-offset-4 hover:text-[#7A1F2A]"
+          >
+            View Product
+          </Link>
         </div>
-      </section>
+      </article>
+    ))}
+  </div>
+</section>
 
-      {/* CATEGORIES */}
-      <section className="mt-16 grid grid-cols-1 gap-4 md:mt-20 md:grid-cols-3">
-        <Link
-          href="/products?category=kurtha"
-          className="rounded-3xl bg-[#FAF7F3] p-6 ring-1 ring-gray-100 transition hover:bg-white hover:shadow-sm"
-        >
-          <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
-            Category
-          </p>
-          <h3 className="mt-2 text-2xl font-semibold text-[#111111]">
-            Kurthas
-          </h3>
-          <p className="mt-2 leading-7 text-gray-600">
-            Elegant daily and festive wear.
-          </p>
-          <div className="mt-4 h-1 w-10 bg-[#7A1F2A]" />
-        </Link>
+{/* CATEGORIES */}
+<section className="mt-16 md:mt-20">
+  <div className="mb-8">
+    <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
+      Shop by Category
+    </p>
+    <h2 className="mt-2 text-2xl font-bold text-[#111111] sm:text-3xl">
+      Explore Collections
+    </h2>
+  </div>
 
-        <Link
-          href="/products?category=saree"
-          className="rounded-3xl bg-[#FAF7F3] p-6 ring-1 ring-gray-100 transition hover:bg-white hover:shadow-sm"
-        >
-          <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
-            Category
-          </p>
-          <h3 className="mt-2 text-2xl font-semibold text-[#111111]">
-            Sarees
-          </h3>
-          <p className="mt-2 leading-7 text-gray-600">
-            Graceful traditional fashion pieces.
-          </p>
-          <div className="mt-4 h-1 w-10 bg-[#7A1F2A]" />
-        </Link>
+  {/* MOBILE: horizontal scroll */}
+  <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory md:hidden">
+    {[
+      {
+        name: "Kurthas",
+        desc: "Elegant daily & festive wear",
+        img: "/products/hero.jpg",
+        link: "/products?category=kurtha",
+      },
+      {
+        name: "Sarees",
+        desc: "Graceful traditional fashion",
+        img: "/products/hero2.jpg",
+        link: "/products?category=saree",
+      },
+      {
+        name: "Tops",
+        desc: "Modern casual styles",
+        img: "/products/hero3.jpg",
+        link: "/products?category=top",
+      },
+    ].map((item) => (
+      <Link
+        key={item.name}
+        href={item.link}
+        className="group relative min-w-[260px] flex-shrink-0 snap-start overflow-hidden rounded-3xl"
+      >
+        <div className="relative h-[300px] w-full">
+          <Image
+            src={item.img}
+            alt={item.name}
+            fill
+            className="object-cover transition duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
 
-        <Link
-          href="/products?category=top"
-          className="rounded-3xl bg-[#FAF7F3] p-6 ring-1 ring-gray-100 transition hover:bg-white hover:shadow-sm"
-        >
-          <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
-            Category
-          </p>
-          <h3 className="mt-2 text-2xl font-semibold text-[#111111]">Tops</h3>
-          <p className="mt-2 leading-7 text-gray-600">
-            Modern styles for casual looks.
-          </p>
-          <div className="mt-4 h-1 w-10 bg-[#7A1F2A]" />
-        </Link>
-      </section>
+        <div className="absolute bottom-5 left-5 text-white">
+          <h3 className="text-lg font-semibold">{item.name}</h3>
+          <p className="mt-1 text-xs text-white/80">{item.desc}</p>
+        </div>
+      </Link>
+    ))}
+  </div>
+
+  {/* DESKTOP: grid */}
+  <div className="hidden grid-cols-3 gap-6 md:grid">
+    {[
+      {
+        name: "Kurthas",
+        desc: "Elegant daily & festive wear",
+        img: "/products/hero.jpg",
+        link: "/products?category=kurtha",
+      },
+      {
+        name: "Sarees",
+        desc: "Graceful traditional fashion",
+        img: "/products/hero2.jpg",
+        link: "/products?category=saree",
+      },
+      {
+        name: "Tops",
+        desc: "Modern casual styles",
+        img: "/products/hero3.jpg",
+        link: "/products?category=top",
+      },
+    ].map((item) => (
+      <Link
+        key={item.name}
+        href={item.link}
+        className="group relative overflow-hidden rounded-3xl"
+      >
+        <div className="relative h-[320px] w-full">
+          <Image
+            src={item.img}
+            alt={item.name}
+            fill
+            className="object-cover transition duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-black/30" />
+        </div>
+
+        <div className="absolute bottom-6 left-6 text-white">
+          <h3 className="text-xl font-semibold">{item.name}</h3>
+          <p className="mt-1 text-sm text-white/80">{item.desc}</p>
+        </div>
+      </Link>
+    ))}
+  </div>
+</section>
 
       {/* TRUST SECTION */}
       <section className="mt-16 grid grid-cols-1 gap-4 pb-10 md:grid-cols-3">
