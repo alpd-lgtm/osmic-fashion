@@ -26,11 +26,12 @@ export default async function ProductsPage({
 
   return (
     <main className="mx-auto max-w-7xl bg-white px-4 py-10 sm:px-6 lg:px-8">
-      <div className="mb-10 rounded-[2rem] bg-[#FFFDFC] px-6 py-8 ring-1 ring-gray-100 sm:px-8">
+      {/* HERO */}
+      <div className="mb-10 rounded-[2rem] bg-[#FFFDFC] px-6 py-8 ring-1 ring-gray-100 sm:px-8 sm:py-10">
         <p className="text-sm uppercase tracking-[0.2em] text-[#7A1F2A]">
           Collection
         </p>
-        <h1 className="mt-2 text-4xl font-bold text-[#111111]">
+        <h1 className="mt-2 text-4xl font-bold text-[#111111] sm:text-5xl">
           Our Products
         </h1>
         <p className="mt-3 max-w-2xl text-gray-600">
@@ -39,6 +40,7 @@ export default async function ProductsPage({
         </p>
       </div>
 
+      {/* FILTER FORM */}
       <form
         action="/products"
         method="GET"
@@ -73,6 +75,7 @@ export default async function ProductsPage({
         </div>
       </form>
 
+      {/* FILTER CHIPS */}
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <p className="text-sm text-gray-600">
           {filteredProducts.length} product
@@ -85,7 +88,7 @@ export default async function ProductsPage({
             className={`rounded-full px-4 py-2 text-sm transition ${
               selectedCategory === "all" && !params.search
                 ? "bg-[#7A1F2A] text-white"
-                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:text-[#7A1F2A]"
             }`}
           >
             All
@@ -98,7 +101,7 @@ export default async function ProductsPage({
             className={`rounded-full px-4 py-2 text-sm transition ${
               selectedCategory === "kurtha"
                 ? "bg-[#7A1F2A] text-white"
-                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:text-[#7A1F2A]"
             }`}
           >
             Kurthas
@@ -111,7 +114,7 @@ export default async function ProductsPage({
             className={`rounded-full px-4 py-2 text-sm transition ${
               selectedCategory === "saree"
                 ? "bg-[#7A1F2A] text-white"
-                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:text-[#7A1F2A]"
             }`}
           >
             Sarees
@@ -124,7 +127,7 @@ export default async function ProductsPage({
             className={`rounded-full px-4 py-2 text-sm transition ${
               selectedCategory === "top"
                 ? "bg-[#7A1F2A] text-white"
-                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+                : "bg-white text-gray-700 ring-1 ring-gray-200 hover:text-[#7A1F2A]"
             }`}
           >
             Tops
@@ -141,6 +144,7 @@ export default async function ProductsPage({
         </div>
       </div>
 
+      {/* EMPTY STATE */}
       {filteredProducts.length === 0 ? (
         <div className="rounded-[2rem] bg-[#FFFDFC] px-6 py-16 text-center ring-1 ring-gray-100">
           <h2 className="text-2xl font-semibold text-[#111111]">
@@ -161,7 +165,7 @@ export default async function ProductsPage({
           {filteredProducts.map((product) => (
             <article
               key={product.id}
-              className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md"
+              className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md hover:ring-[#7A1F2A]/20"
             >
               <Link href={`/products/${product.slug}`} className="block">
                 <div className="relative h-[380px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100">
@@ -185,7 +189,8 @@ export default async function ProductsPage({
                       {product.name}
                     </Link>
                   </h2>
-                  <p className="shrink-0 text-base font-semibold text-[#7A1F2A]">
+
+                  <p className="shrink-0 text-base font-semibold text-[#111111]">
                     NPR {product.price}
                   </p>
                 </div>
