@@ -6,21 +6,21 @@ import { useEffect, useState } from "react";
 
 const slides = [
   {
-    image: "/products/hero2.jpg",
+    image: "/products/hero.jpg",
     title: "Elegant fashion pieces for every occasion",
     subtitle:
       "Discover graceful kurtas, sarees, and modern boutique styles with a clean and simple shopping experience.",
     tag: "New Collection",
   },
   {
-    image: "/products/saree-1.webp",
+    image: "/products/ab.png",
     title: "Boutique styles with modern elegance",
     subtitle:
       "Shop premium looks designed for comfort, confidence, and everyday beauty.",
     tag: "Trending Now",
   },
   {
-    image: "/products/top-6.jpg",
+    image: "/products/cb.jpg",
     title: "Graceful looks for festive and daily wear",
     subtitle:
       "Explore curated fashion pieces made to feel timeless, stylish, and easy to wear.",
