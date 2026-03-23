@@ -1,62 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { products } from "@/lib/products";
+import HeroSlider from "@/components/HeroSlider";
 
 export default function HomePage() {
   const featuredProducts = products.slice(0, 4);
 
   return (
     <main className="mx-auto max-w-7xl bg-white px-4 py-4 sm:px-6 sm:py-10 lg:px-8">
-      {/* HERO */}
-      <section className="relative overflow-hidden rounded-[2rem]">
-        <div className="relative h-[520px] w-full sm:h-[600px] lg:h-[720px]">
-          <Image
-            src="/products/hero.jpg"
-            alt="Elegant fashion model"
-            fill
-            priority
-            className="object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-black/30" />
-        </div>
-
-        <div className="absolute inset-0 flex items-center">
-          <div className="mx-auto w-full max-w-7xl px-6">
-            <div className="max-w-xl text-white">
-              <p className="text-xs uppercase tracking-[0.3em] text-white/80 sm:text-sm">
-                New Collection
-              </p>
-
-              <div className="mt-3 h-px w-20 bg-white/70 sm:w-24" />
-
-              <h1 className="mt-5 text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-                Elegant fashion pieces for every occasion
-              </h1>
-
-              <p className="mt-5 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">
-                Discover graceful kurtas, sarees, and modern boutique styles
-                with a clean and simple shopping experience.
-              </p>
-
-              <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
-                <Link
-                  href="/products"
-                  className="inline-flex min-h-[52px] items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-medium text-[#111111] transition hover:opacity-90"
-                >
-                  Shop All Products
-                </Link>
-
-                <Link
-                  href="/products?category=kurtha"
-                  className="inline-flex min-h-[52px] items-center justify-center rounded-2xl border border-white/60 px-6 py-3 text-sm font-medium text-white transition hover:bg-white hover:text-[#111111]"
-                >
-                  Browse Kurthas
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSlider />
 
       {/* FEATURED PRODUCTS */}
       <section className="mt-16 rounded-[2rem] bg-[#FCFAF8] px-4 py-10 sm:mt-20 sm:px-6">
