@@ -13,14 +13,14 @@ const slides = [
     tag: "New Collection",
   },
   {
-    image: "/products/ab.png",
+    image: "/products/hero.jpg",
     title: "Boutique styles with modern elegance",
     subtitle:
       "Shop premium looks designed for comfort, confidence, and everyday beauty.",
     tag: "Trending Now",
   },
   {
-    image: "/products/cb.jpg",
+    image: "/products/top-6.jpg",
     title: "Graceful looks for festive and daily wear",
     subtitle:
       "Explore curated fashion pieces made to feel timeless, stylish, and easy to wear.",
