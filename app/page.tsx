@@ -271,54 +271,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="mt-6 rounded-[2rem] border border-gray-100 bg-[#FCFAF8] px-5 py-8 sm:px-8 sm:py-10">
-        <div className="grid gap-8 md:grid-cols-3">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A]">
-              Aawase
-            </p>
-            <h3 className="mt-3 max-w-xs text-xl font-semibold leading-snug text-[#111111]">
-              Elegant fashion for every occasion
-            </h3>
-            <p className="mt-3 max-w-sm text-sm leading-6 text-gray-600">
-              Discover boutique styles with a clean and simple shopping
-              experience.
-            </p>
-          </div>
-
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A]">
-              Navigation
-            </p>
-            <div className="mt-3 flex flex-col gap-2 text-sm text-gray-600">
-              <Link href="/" className="transition hover:text-[#7A1F2A]">
-                Home
-              </Link>
-              <Link href="/products" className="transition hover:text-[#7A1F2A]">
-                Products
-              </Link>
-            </div>
-          </div>
-
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A]">
-              Contact
-            </p>
-            <p className="mt-3 max-w-sm text-sm leading-6 text-gray-600">
-              Direct order available on WhatsApp with store pickup and delivery
-              in Kathmandu.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-8 border-t border-gray-200 pt-4 text-xs text-gray-500 sm:flex sm:items-center sm:justify-between">
-          <p>© 2026 Aawase. All rights reserved.</p>
-          <p className="mt-2 sm:mt-0">
-            Designed for a clean and simple shopping experience.
-          </p>
-        </div>
-      </footer>
     </main>
   );
 }
