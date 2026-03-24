@@ -7,137 +7,137 @@ export default function HomePage() {
   const featuredProducts = products.slice(0, 4);
 
   return (
-    <main className="mx-auto max-w-7xl bg-white px-4 py-4 sm:px-6 sm:py-10 lg:px-8">
+    <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-6 sm:px-6 sm:pt-6 sm:pb-8 lg:px-8">
       <HeroSlider />
 
       {/* FEATURED PRODUCTS */}
-<section className="mt-16 rounded-[2rem] bg-[#FCFAF8] px-4 py-10 sm:mt-20 sm:px-6">
-  <div className="mb-8 flex items-end justify-between gap-4">
-    <div>
-      <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
-        Featured
-      </p>
-      <h2 className="mt-2 text-2xl font-bold text-[#111111] sm:text-3xl">
-        Featured Products
-      </h2>
-    </div>
-
-    <Link
-      href="/products"
-      className="text-sm font-medium text-gray-600 underline underline-offset-4 hover:text-[#7A1F2A]"
-    >
-      View all
-    </Link>
-  </div>
-
-  {/* MOBILE: horizontal scroll */}
- <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth lg:hidden">
-    {featuredProducts.map((product) => (
-      <article
-        key={product.id}
-        className="group min-w-[260px] flex-shrink-0 snap-start rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:shadow-md"
-      >
-        <Link href={`/products/${product.slug}`} className="block">
-          <div className="relative h-[280px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100">
-            <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[11px] font-medium text-white">
-              New
-            </span>
-
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
-            />
-          </div>
-        </Link>
-
-        <div className="mt-4">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#7A1F2A]">
-            {product.category}
-          </p>
-
-          <div className="mt-2 flex items-start justify-between gap-3">
-            <h3 className="text-base font-semibold leading-snug text-[#111111]">
-              <Link href={`/products/${product.slug}`}>{product.name}</Link>
-            </h3>
-
-            <p className="shrink-0 text-sm font-semibold text-[#111111]">
-              NPR {product.price}
+      <section className="mt-8 rounded-[2rem] bg-[#FCFAF8] px-4 py-8 sm:mt-10 sm:px-6 sm:py-9">
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
+              Featured
             </p>
+            <h2 className="mt-2 text-2xl font-bold text-[#111111] sm:text-3xl">
+              Featured Products
+            </h2>
           </div>
-
-          <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
-            {product.description}
-          </p>
 
           <Link
-            href={`/products/${product.slug}`}
-            className="mt-4 inline-block text-sm font-medium text-[#111111] underline underline-offset-4 hover:text-[#7A1F2A]"
+            href="/products"
+            className="text-sm font-medium text-gray-600 underline underline-offset-4 transition hover:text-[#7A1F2A]"
           >
-            View Product
+            View all
           </Link>
         </div>
-      </article>
-    ))}
-  </div>
 
-  {/* DESKTOP: grid */}
-  <div className="hidden grid-cols-2 gap-8 lg:grid xl:grid-cols-4">
-    {featuredProducts.map((product) => (
-      <article
-        key={product.id}
-        className="group rounded-3xl bg-white p-4 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-md hover:ring-[#7A1F2A]/20"
-      >
-        <Link href={`/products/${product.slug}`} className="block">
-          <div className="relative h-[320px] w-full overflow-hidden rounded-3xl bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[360px]">
-            <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[11px] font-medium text-white">
-              New
-            </span>
+        {/* MOBILE: horizontal scroll */}
+        <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth lg:hidden">
+          {featuredProducts.map((product) => (
+            <article
+              key={product.id}
+              className="group min-w-[260px] flex-shrink-0 snap-start rounded-3xl bg-white p-3.5 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+            >
+              <Link href={`/products/${product.slug}`} className="block">
+                <div className="relative h-[260px] w-full overflow-hidden rounded-[1.75rem] bg-[#FAF7F3] ring-1 ring-gray-100">
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[11px] font-medium text-white">
+                    New
+                  </span>
 
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
-            />
-          </div>
-        </Link>
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-4 transition duration-500 ease-out group-hover:scale-[1.05]"
+                  />
+                </div>
+              </Link>
 
-        <div className="mt-5">
-          <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
-            {product.category}
-          </p>
+              <div className="mt-3.5">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-[#7A1F2A]">
+                  {product.category}
+                </p>
 
-          <div className="mt-2 flex items-start justify-between gap-4">
-            <h3 className="text-lg font-semibold leading-snug text-[#111111]">
-              <Link href={`/products/${product.slug}`}>{product.name}</Link>
-            </h3>
+                <div className="mt-2 flex items-start justify-between gap-3">
+                  <h3 className="text-base font-semibold leading-snug text-[#111111]">
+                    <Link href={`/products/${product.slug}`}>{product.name}</Link>
+                  </h3>
 
-            <p className="shrink-0 text-sm font-semibold text-[#111111] sm:text-base">
-              NPR {product.price}
-            </p>
-          </div>
+                  <p className="shrink-0 text-sm font-semibold text-[#111111]">
+                    NPR {product.price}
+                  </p>
+                </div>
 
-          <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
-            {product.description}
-          </p>
+                <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
+                  {product.description}
+                </p>
 
-          <Link
-            href={`/products/${product.slug}`}
-            className="mt-4 inline-block text-sm font-medium text-[#111111] underline underline-offset-4 hover:text-[#7A1F2A]"
-          >
-            View Product
-          </Link>
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="mt-4 inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
+                >
+                  View Product
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
-      </article>
-    ))}
-  </div>
-</section>
+
+        {/* DESKTOP: grid */}
+        <div className="hidden grid-cols-2 gap-5 lg:grid xl:grid-cols-4">
+          {featuredProducts.map((product) => (
+            <article
+              key={product.id}
+              className="group rounded-3xl bg-white p-3.5 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:ring-[#7A1F2A]/20"
+            >
+              <Link href={`/products/${product.slug}`} className="block">
+                <div className="relative h-[300px] w-full overflow-hidden rounded-[1.75rem] bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[340px]">
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[11px] font-medium text-white">
+                    New
+                  </span>
+
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-4 transition duration-500 ease-out group-hover:scale-[1.05]"
+                  />
+                </div>
+              </Link>
+
+              <div className="mt-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
+                  {product.category}
+                </p>
+
+                <div className="mt-2 flex items-start justify-between gap-4">
+                  <h3 className="text-lg font-semibold leading-snug text-[#111111]">
+                    <Link href={`/products/${product.slug}`}>{product.name}</Link>
+                  </h3>
+
+                  <p className="shrink-0 text-sm font-semibold text-[#111111] sm:text-base">
+                    NPR {product.price}
+                  </p>
+                </div>
+
+                <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
+                  {product.description}
+                </p>
+
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="mt-4 inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
+                >
+                  View Product
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
 {/* CATEGORIES */}
-<section className="mt-16 md:mt-20">
-  <div className="mb-8">
+<section className="mt-7 md:mt-8">
+  <div className="mb-7">
     <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
       Shop by Category
     </p>
@@ -152,26 +152,26 @@ export default function HomePage() {
       {
         name: "Kurthas",
         desc: "Elegant daily & festive wear",
-        img: "/products/hero.jpg",
+        img: "/products/kurtha-1.avif",
         link: "/products?category=kurtha",
       },
       {
         name: "Sarees",
         desc: "Graceful traditional fashion",
-        img: "/products/hero2.jpg",
+        img: "/products/saree-1.avif",
         link: "/products?category=saree",
       },
       {
         name: "Tops",
         desc: "Modern casual styles",
-        img: "/products/hero3.jpg",
+        img: "/products/top-1.avif",
         link: "/products?category=top",
       },
     ].map((item) => (
       <Link
         key={item.name}
         href={item.link}
-        className="group relative min-w-[260px] flex-shrink-0 snap-start overflow-hidden rounded-3xl"
+        className="group relative min-w-[260px] flex-shrink-0 snap-start overflow-hidden rounded-3xl transition duration-300 hover:-translate-y-1 hover:shadow-lg"
       >
         <div className="relative h-[300px] w-full">
           <Image
@@ -180,10 +180,12 @@ export default function HomePage() {
             fill
             className="object-cover transition duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-black/30" />
+
+          {/* improved overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
         </div>
 
-        <div className="absolute bottom-5 left-5 text-white">
+        <div className="absolute bottom-5 left-5 right-5 text-white">
           <h3 className="text-lg font-semibold">{item.name}</h3>
           <p className="mt-1 text-xs text-white/80">{item.desc}</p>
         </div>
@@ -197,26 +199,26 @@ export default function HomePage() {
       {
         name: "Kurthas",
         desc: "Elegant daily & festive wear",
-        img: "/products/hero.jpg",
+        img: "/products/kurtha-4.jpg",
         link: "/products?category=kurtha",
       },
       {
         name: "Sarees",
         desc: "Graceful traditional fashion",
-        img: "/products/hero2.jpg",
+        img: "/products/saree-1.webp",
         link: "/products?category=saree",
       },
       {
         name: "Tops",
         desc: "Modern casual styles",
-        img: "/products/hero3.jpg",
+        img: "/products/top-2.webp",
         link: "/products?category=top",
       },
     ].map((item) => (
       <Link
         key={item.name}
         href={item.link}
-        className="group relative overflow-hidden rounded-3xl"
+        className="group relative overflow-hidden rounded-3xl transition duration-300 hover:-translate-y-1 hover:shadow-lg"
       >
         <div className="relative h-[320px] w-full">
           <Image
@@ -225,10 +227,12 @@ export default function HomePage() {
             fill
             className="object-cover transition duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-black/30" />
+
+          {/* improved overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
         </div>
 
-        <div className="absolute bottom-6 left-6 text-white">
+        <div className="absolute bottom-6 left-6 right-6 text-white">
           <h3 className="text-xl font-semibold">{item.name}</h3>
           <p className="mt-1 text-sm text-white/80">{item.desc}</p>
         </div>
@@ -238,8 +242,8 @@ export default function HomePage() {
 </section>
 
       {/* TRUST SECTION */}
-      <section className="mt-16 grid grid-cols-1 gap-4 pb-10 md:grid-cols-3">
-        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100">
+      <section className="mt-10 grid grid-cols-1 gap-4 pb-4 md:grid-cols-3">
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-sm">
           <h3 className="text-lg font-semibold text-[#111111]">
             Quality Fabric
           </h3>
@@ -248,7 +252,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100">
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-sm">
           <h3 className="text-lg font-semibold text-[#111111]">
             Kathmandu Delivery
           </h3>
@@ -257,7 +261,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100">
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-sm">
           <h3 className="text-lg font-semibold text-[#111111]">
             Easy Ordering
           </h3>
@@ -266,6 +270,55 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      {/* FOOTER */}
+      <footer className="mt-6 rounded-[2rem] border border-gray-100 bg-[#FCFAF8] px-5 py-8 sm:px-8 sm:py-10">
+        <div className="grid gap-8 md:grid-cols-3">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A]">
+              Aawase
+            </p>
+            <h3 className="mt-3 max-w-xs text-xl font-semibold leading-snug text-[#111111]">
+              Elegant fashion for every occasion
+            </h3>
+            <p className="mt-3 max-w-sm text-sm leading-6 text-gray-600">
+              Discover boutique styles with a clean and simple shopping
+              experience.
+            </p>
+          </div>
+
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A]">
+              Navigation
+            </p>
+            <div className="mt-3 flex flex-col gap-2 text-sm text-gray-600">
+              <Link href="/" className="transition hover:text-[#7A1F2A]">
+                Home
+              </Link>
+              <Link href="/products" className="transition hover:text-[#7A1F2A]">
+                Products
+              </Link>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A]">
+              Contact
+            </p>
+            <p className="mt-3 max-w-sm text-sm leading-6 text-gray-600">
+              Direct order available on WhatsApp with store pickup and delivery
+              in Kathmandu.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 border-t border-gray-200 pt-4 text-xs text-gray-500 sm:flex sm:items-center sm:justify-between">
+          <p>© 2026 Aawase. All rights reserved.</p>
+          <p className="mt-2 sm:mt-0">
+            Designed for a clean and simple shopping experience.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }

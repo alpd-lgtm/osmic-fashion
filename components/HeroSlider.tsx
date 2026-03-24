@@ -46,7 +46,7 @@ export default function HeroSlider() {
 
   return (
     <section className="relative overflow-hidden rounded-[2rem]">
-      <div className="relative h-[520px] w-full sm:h-[600px] lg:h-[720px]">
+      <div className="relative h-[440px] w-full sm:h-[520px] lg:h-[620px]">
         {slides.map((slide, index) => (
           <div
             key={slide.image}
@@ -59,41 +59,41 @@ export default function HeroSlider() {
               alt={slide.title}
               fill
               priority={index === 0}
-              className="object-cover object-top"
+              className="object-cover object-center"
             />
-            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-black/15" />
           </div>
         ))}
       </div>
 
       <div className="absolute inset-0 flex items-center">
-        <div className="mx-auto w-full max-w-7xl px-6">
+        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
           <div className="max-w-xl text-white">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/80 sm:text-sm">
+            <p className="text-[11px] uppercase tracking-[0.32em] text-white/80 sm:text-xs">
               {slides[current].tag}
             </p>
 
-            <div className="mt-3 h-px w-20 bg-white/70 sm:w-24" />
+            <div className="mt-3 h-px w-16 bg-white/70 sm:w-20" />
 
-            <h1 className="mt-5 text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
               {slides[current].title}
             </h1>
 
-            <p className="mt-5 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8">
+            <p className="mt-4 max-w-lg text-sm leading-7 text-white/85 sm:mt-5 sm:text-base sm:leading-8">
               {slides[current].subtitle}
             </p>
 
-            <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
               <Link
                 href="/products"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-2xl bg-white px-6 py-3 text-sm font-medium text-[#111111] transition hover:opacity-90"
+                className="inline-flex min-h-[50px] items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-medium text-[#111111] transition hover:scale-[1.02] hover:opacity-95"
               >
                 Shop All Products
               </Link>
 
               <Link
                 href="/products?category=kurtha"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-2xl border border-white/60 px-6 py-3 text-sm font-medium text-white transition hover:bg-white hover:text-[#111111]"
+                className="inline-flex min-h-[50px] items-center justify-center rounded-full border border-white/60 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/10"
               >
                 Browse Kurthas
               </Link>
