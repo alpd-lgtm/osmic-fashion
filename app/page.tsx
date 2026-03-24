@@ -242,8 +242,8 @@ export default function HomePage() {
 </section>
 
       {/* TRUST SECTION */}
-      <section className="mt-10 grid grid-cols-1 gap-4 pb-4 md:grid-cols-3">
-        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-sm">
+      <section className="mt-10 grid grid-cols-1 gap-5 pb-4 md:grid-cols-3">
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-md hover:-translate-y-1">
           <h3 className="text-lg font-semibold text-[#111111]">
             Quality Fabric
           </h3>
@@ -252,7 +252,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-sm">
+<div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-md hover:-translate-y-1">
           <h3 className="text-lg font-semibold text-[#111111]">
             Kathmandu Delivery
           </h3>
@@ -261,7 +261,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-sm">
+        <div className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:shadow-md hover:-translate-y-1">
           <h3 className="text-lg font-semibold text-[#111111]">
             Easy Ordering
           </h3>
@@ -270,7 +270,51 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+{/* ABOUT AAWASE */}
+<section className="mt-10 rounded-[2rem] bg-[#FCFAF8] px-6 py-10 sm:px-8 sm:py-12 lg:px-10">
+  <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+    
+    {/* Text */}
+    <div>
+      <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
+        About Aawase
+      </p>
 
+      <h2 className="mt-2 text-2xl font-bold text-[#111111] sm:text-3xl">
+        A simple and elegant boutique experience
+      </h2>
+
+      <p className="mt-4 text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
+        Aawase is built around simplicity, elegance, and everyday comfort.
+        Each piece is thoughtfully selected to bring a balance of modern style
+        and traditional inspiration. We focus on making fashion easy to browse,
+        easy to choose, and easy to order.
+      </p>
+
+      <p className="mt-4 text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
+        Whether for daily wear or special occasions, our collection is designed
+        to help you feel confident with minimal effort and maximum comfort.
+      </p>
+
+      <Link
+        href="/products"
+        className="mt-6 inline-flex rounded-full bg-[#7A1F2A] px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+      >
+        Explore Collection
+      </Link>
+    </div>
+
+    {/* Image */}
+    <div className="relative h-[300px] w-full overflow-hidden rounded-[2rem] bg-[#FAF7F3] sm:h-[380px]">
+      <Image
+        src="/products/kurtha-1.avif"
+        alt="Aawase collection"
+        fill
+        className="object-cover"
+      />
+    </div>
+  </div>
+</section>
     </main>
   );
 }

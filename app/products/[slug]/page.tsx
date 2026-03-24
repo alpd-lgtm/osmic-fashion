@@ -23,7 +23,7 @@ export default async function ProductDetailPage({
     .slice(0, 3);
 
   return (
-    <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-6 sm:px-6 sm:pt-6 sm:pb-8 lg:px-8">
+    <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-8 sm:px-6 sm:pt-6 lg:px-8">
       {/* Breadcrumb */}
       <div className="mb-5 flex flex-wrap items-center gap-2 text-sm text-gray-500">
         <Link href="/" className="hover:text-[#7A1F2A]">
@@ -48,7 +48,7 @@ export default async function ProductDetailPage({
                 alt={product.name}
                 fill
                 priority
-                className="object-contain p-4 transition duration-500 hover:scale-[1.03]"
+                className="object-contain p-4"
               />
             </div>
           </div>
@@ -73,26 +73,26 @@ export default async function ProductDetailPage({
               {product.description}
             </p>
 
-            {/* Highlights */}
+            {/* Info boxes */}
             <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="rounded-xl bg-white px-4 py-3 text-sm text-gray-700 ring-1 ring-gray-100">
                 Boutique style
               </div>
               <div className="rounded-xl bg-white px-4 py-3 text-sm text-gray-700 ring-1 ring-gray-100">
-                WhatsApp order
+                Premium fabric
               </div>
               <div className="rounded-xl bg-white px-4 py-3 text-sm text-gray-700 ring-1 ring-gray-100">
                 Kathmandu delivery
               </div>
             </div>
 
-            {/* CTA */}
+            {/* Buttons */}
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
                 href="https://wa.me/9779800000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:scale-[1.02] hover:opacity-95"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:opacity-95"
               >
                 Order on WhatsApp
               </a>
@@ -124,7 +124,7 @@ export default async function ProductDetailPage({
             {relatedProducts.map((item) => (
               <article
                 key={item.id}
-                className="group rounded-3xl bg-white p-3.5 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:ring-[#7A1F2A]/20"
+                className="group rounded-3xl bg-white p-3.5 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
                 <Link href={`/products/${item.slug}`} className="block">
                   <div className="relative h-[260px] w-full overflow-hidden rounded-[1.75rem] bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[300px]">
@@ -152,7 +152,7 @@ export default async function ProductDetailPage({
                     </p>
                   </div>
 
-                  <p className="mt-2 text-sm leading-6 text-gray-600 line-clamp-2">
+                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
                     {item.description}
                   </p>
 

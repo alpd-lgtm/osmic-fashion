@@ -10,37 +10,55 @@ export default function SiteHeader() {
     <>
       <div className="h-1 w-full bg-[#7A1F2A]" />
 
-      <div className="border-b border-gray-100 bg-[#FAF7F3] px-4 py-2 text-center text-xs font-medium leading-5 text-gray-700 sm:py-3 sm:text-sm">
+      {/* Announcement bar */}
+      <div className="border-b border-gray-100 bg-[#FAF7F3] px-4 py-2 text-center text-[11px] font-medium leading-5 text-gray-700 sm:py-3 sm:text-sm">
         Direct order available on WhatsApp · Store pickup and delivery in Kathmandu
       </div>
 
+      {/* Header */}
       <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
+          {/* Logo */}
           <Link
             href="/"
-            className="text-xl font-semibold tracking-[0.08em] text-[#111111] sm:text-2xl"
+            className="text-xl font-semibold tracking-[0.12em] text-[#111111] transition hover:text-[#7A1F2A] sm:text-2xl"
           >
             Aawase
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden items-center gap-6 text-sm font-medium text-gray-600 md:flex">
-            <Link href="/" className="transition hover:text-[#7A1F2A]">
+          <nav className="hidden items-center gap-8 md:flex">
+            <Link
+              href="/"
+              className="text-sm font-medium text-gray-600 transition hover:text-[#7A1F2A]"
+            >
               Home
             </Link>
             <Link
               href="/products"
-              className="transition hover:text-[#7A1F2A]"
+              className="text-sm font-medium text-gray-600 transition hover:text-[#7A1F2A]"
             >
               Products
             </Link>
           </nav>
 
+          {/* Desktop CTA */}
+          <div className="hidden md:flex">
+            <a
+              href="https://wa.me/9779800000000"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full border border-[#7A1F2A] px-4 py-2 text-sm font-medium text-[#7A1F2A] transition hover:bg-[#7A1F2A] hover:text-white"
+            >
+              WhatsApp Order
+            </a>
+          </div>
+
           {/* Mobile Menu Button */}
           <button
             type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="inline-flex items-center justify-center rounded-xl border border-gray-200 p-2 text-[#111111] md:hidden"
+            className="inline-flex items-center justify-center rounded-xl border border-gray-200 p-2 text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A] md:hidden"
             aria-label="Toggle menu"
           >
             <svg
@@ -86,6 +104,16 @@ export default function SiteHeader() {
               >
                 Products
               </Link>
+
+              <a
+                href="https://wa.me/9779800000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="mt-3 inline-flex items-center justify-center rounded-full bg-[#7A1F2A] px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
+              >
+                Order on WhatsApp
+              </a>
             </nav>
           </div>
         )}
