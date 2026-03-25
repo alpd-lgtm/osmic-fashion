@@ -86,14 +86,14 @@ export default function HeroSlider() {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div className="relative h-[460px] w-full sm:h-[560px] lg:h-[650px]">
+      <div className="relative h-[390px] w-full sm:h-[560px] lg:h-[650px]">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
             className={`absolute inset-0 transition-all duration-700 ${
               index === current
                 ? "z-10 opacity-100"
-                : "z-0 opacity-0 pointer-events-none"
+                : "pointer-events-none z-0 opacity-0"
             }`}
           >
             <Image
@@ -112,33 +112,33 @@ export default function HeroSlider() {
       </div>
 
       <div className="absolute inset-0 z-20 flex items-center">
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
-          <div className="max-w-xl text-white">
+        <div className="mx-auto w-full max-w-7xl px-5 pt-3 sm:px-8 sm:pt-0 lg:px-12">
+          <div className="max-w-[340px] text-white sm:max-w-xl">
             <p className="text-[11px] uppercase tracking-[0.32em] text-white/80 sm:text-xs">
               {slides[current].tag}
             </p>
 
             <div className="mt-3 h-px w-16 bg-white/70 sm:w-20" />
 
-            <h1 className="mt-4 text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 max-w-[11ch] text-[2.2rem] font-bold leading-[1.05] sm:max-w-none sm:text-5xl lg:text-6xl">
               {slides[current].title}
             </h1>
 
-            <p className="mt-4 max-w-lg text-sm leading-7 text-white/85 sm:mt-5 sm:text-base sm:leading-8">
+            <p className="mt-4 max-w-[26ch] text-[15px] leading-7 text-white/85 sm:mt-5 sm:max-w-lg sm:text-base sm:leading-8">
               {slides[current].subtitle}
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
               <Link
                 href="/products"
-                className="inline-flex min-h-[50px] items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-medium text-[#111111] transition hover:scale-[1.02] hover:opacity-95"
+                className="inline-flex min-h-[46px] items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-medium text-[#111111] transition hover:scale-[1.02] hover:opacity-95 sm:min-h-[50px] sm:px-6"
               >
                 Shop All Products
               </Link>
 
               <Link
                 href="/products?category=kurtha"
-                className="inline-flex min-h-[50px] items-center justify-center rounded-full border border-white/60 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/10"
+                className="inline-flex min-h-[46px] items-center justify-center rounded-full border border-white/50 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10 sm:min-h-[50px] sm:px-6"
               >
                 Browse Kurthas
               </Link>
