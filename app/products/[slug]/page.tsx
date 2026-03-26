@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { products } from "@/lib/products";
+import AddToCartButton from "@/components/AddToCartButton";
 
 export default async function ProductDetailPage({
   params,
@@ -22,7 +23,7 @@ export default async function ProductDetailPage({
     )
     .slice(0, 3);
 
-  const whatsappNumber = "9779800000000"; // replace with your real number
+  const whatsappNumber = "9779800000000";
   const whatsappMessage = encodeURIComponent(
     `Hello, I want to order "${product.name}" for NPR ${product.price}. Please share availability and delivery details.`
   );
@@ -30,7 +31,6 @@ export default async function ProductDetailPage({
 
   return (
     <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-8 sm:px-6 sm:pt-5 lg:px-8">
-      {/* BREADCRUMB */}
       <div className="mb-4 flex flex-wrap items-center gap-2 text-sm text-gray-500">
         <Link href="/" className="transition hover:text-[#7A1F2A]">
           Home
@@ -43,33 +43,30 @@ export default async function ProductDetailPage({
         <span className="text-[#7A1F2A]">{product.name}</span>
       </div>
 
-      {/* PRODUCT DETAIL */}
       <section className="rounded-[1.75rem] bg-[#FFFDFC] p-4 ring-1 ring-gray-100 sm:p-5 lg:p-6">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
-          {/* IMAGE */}
           <div className="relative">
-            <div className="group relative h-[320px] w-full overflow-hidden rounded-[1.5rem] bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[420px] lg:h-[500px]">
+            <div className="group relative h-[340px] w-full overflow-hidden rounded-[1.75rem] bg-[#F8F5F1] ring-1 ring-gray-100 sm:h-[440px] lg:h-[520px]">
               <Image
                 src={product.image}
                 alt={product.name}
                 fill
                 priority
-                className="object-contain p-4 transition duration-500 ease-out group-hover:scale-[1.06] sm:p-5"
+                className="object-contain p-4 transition duration-700 ease-out group-hover:scale-[1.08] sm:p-6"
               />
             </div>
           </div>
 
-          {/* CONTENT */}
           <div className="flex flex-col justify-center lg:pr-4">
             <p className="text-[11px] uppercase tracking-[0.28em] text-[#7A1F2A] sm:text-xs">
               {product.category}
             </p>
 
-            <h1 className="mt-2 text-2xl font-bold leading-tight text-[#111111] sm:text-3xl lg:text-[2.2rem]">
+            <h1 className="mt-3 text-2xl font-semibold leading-tight text-[#111111] sm:text-3xl lg:text-[2.2rem]">
               {product.name}
             </h1>
 
-            <div className="mt-3 flex flex-wrap items-center gap-3">
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               <p className="text-xl font-semibold text-[#111111] sm:text-2xl">
                 NPR {product.price}
               </p>
@@ -79,13 +76,12 @@ export default async function ProductDetailPage({
               </span>
             </div>
 
-            <div className="mt-4 h-px w-14 bg-[#7A1F2A]" />
+            <div className="mt-4 h-px w-20 bg-[#7A1F2A]" />
 
             <p className="mt-4 max-w-xl text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
               {product.description}
             </p>
 
-            {/* INFO PILLS */}
             <div className="mt-5 flex flex-wrap gap-2.5">
               <div className="rounded-full bg-white px-4 py-2 text-sm text-gray-700 ring-1 ring-gray-200">
                 Boutique style
@@ -98,26 +94,35 @@ export default async function ProductDetailPage({
               </div>
             </div>
 
-            {/* ACTIONS */}
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:scale-[1.02] hover:opacity-95"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-[#7A1F2A] px-7 py-3 text-sm font-semibold text-white transition hover:scale-[1.03] hover:opacity-95"
               >
                 Order on WhatsApp
               </a>
 
+              <AddToCartButton
+                product={{
+                  id: product.id,
+                  name: product.name,
+                  slug: product.slug,
+                  price: product.price,
+                  image: product.image,
+                  category: product.category,
+                }}
+              />
+
               <Link
                 href="/products"
-                className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
               >
                 Back to Products
               </Link>
             </div>
 
-            {/* EXTRA NOTE */}
             <div className="mt-6 rounded-[1.25rem] bg-[#FCFAF8] px-4 py-4 ring-1 ring-gray-100">
               <p className="text-sm leading-6 text-gray-600">
                 Simple ordering available through WhatsApp with the product name
@@ -125,7 +130,6 @@ export default async function ProductDetailPage({
               </p>
             </div>
 
-            {/* PRODUCT INFO */}
             <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="rounded-[1.25rem] bg-white px-4 py-4 ring-1 ring-gray-100">
                 <p className="text-[11px] uppercase tracking-[0.22em] text-[#7A1F2A]">
@@ -161,7 +165,6 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      {/* RELATED PRODUCTS */}
       {relatedProducts.length > 0 && (
         <section className="mt-8 rounded-[1.75rem] bg-[#FCFAF8] px-4 py-7 ring-1 ring-gray-100 sm:mt-10 sm:px-5 sm:py-8 lg:px-6">
           <div className="mb-5">
@@ -173,7 +176,7 @@ export default async function ProductDetailPage({
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6">
             {relatedProducts.map((item) => (
               <article
                 key={item.id}

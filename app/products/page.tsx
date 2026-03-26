@@ -165,14 +165,14 @@ export default async function ProductsPage({
       ) : (
         <>
           {/* PRODUCT GRID */}
-          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-5">
+          <section className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:gap-6">
             {filteredProducts.map((product) => (
               <article
                 key={product.id}
-                className="group rounded-[1.5rem] bg-white p-3 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:ring-[#7A1F2A]/15"
+                className="group flex h-full flex-col rounded-[1.5rem] bg-white p-3 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-[#7A1F2A]/20"
               >
                 <Link href={`/products/${product.slug}`} className="block">
-                  <div className="relative h-[260px] w-full overflow-hidden rounded-[1.25rem] bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[290px] lg:h-[310px]">
+                  <div className="relative h-[220px] w-full overflow-hidden rounded-[1.25rem] bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[260px] lg:h-[280px]">
                     <Image
                       src={product.image}
                       alt={product.name}
@@ -182,7 +182,7 @@ export default async function ProductsPage({
                   </div>
                 </Link>
 
-                <div className="mt-4">
+                <div className="mt-4 flex flex-1 flex-col">
                   <p className="text-[10px] uppercase tracking-[0.22em] text-[#7A1F2A]">
                     {product.category}
                   </p>
@@ -199,13 +199,13 @@ export default async function ProductsPage({
                     </p>
                   </div>
 
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
+                  <p className="mt-2 flex-1 line-clamp-2 text-sm leading-6 text-gray-600">
                     {product.description}
                   </p>
 
                   <Link
                     href={`/products/${product.slug}`}
-                    className="mt-3 inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
+                    className="mt-4 inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
                   >
                     View Product
                   </Link>
