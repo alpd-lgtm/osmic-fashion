@@ -15,7 +15,7 @@ const slides = [
   },
   {
     id: 2,
-    image: "/products/saree-2.jpg",
+    image: "/products/hero2.jpg",
     title: "Boutique styles with modern elegance",
     subtitle:
       "Shop premium looks designed for comfort, confidence, and everyday beauty.",
@@ -23,7 +23,7 @@ const slides = [
   },
   {
     id: 3,
-    image: "/products/top-6.jpg",
+    image: "/products/hero3.jpg",
     title: "Graceful looks for festive and daily wear",
     subtitle:
       "Explore curated fashion pieces made to feel timeless, stylish, and easy to wear.",

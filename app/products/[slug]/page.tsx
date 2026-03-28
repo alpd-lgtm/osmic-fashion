@@ -114,15 +114,9 @@ export default async function ProductDetailPage({
   </div>
 </div>
 
-            <div className="mt-7 rounded-[1.5rem] bg-[#FCFAF8] px-5 py-5 ring-1 ring-[#EEE7DF]">
-              <p className="text-sm leading-7 text-[#666666]">
-                Simple ordering available through WhatsApp with the product name,
-                selected size, and product link already filled in for faster
-                checkout.
-              </p>
-            </div>
+          
 
-            <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="rounded-[1.4rem] bg-white px-4 py-4 ring-1 ring-[#EEE7DF]">
                 <p className="text-[10px] uppercase tracking-[0.26em] text-[#8A6A4A]">
                   Size & Fit
@@ -132,16 +126,9 @@ export default async function ProductDetailPage({
                   styling.
                 </p>
               </div>
+              
 
-              <div className="rounded-[1.4rem] bg-white px-4 py-4 ring-1 ring-[#EEE7DF]">
-                <p className="text-[10px] uppercase tracking-[0.26em] text-[#8A6A4A]">
-                  Delivery
-                </p>
-                <p className="mt-2 text-sm leading-6 text-[#666666]">
-                  Delivery available inside Kathmandu. Contact on WhatsApp for
-                  timing and availability.
-                </p>
-              </div>
+
 
               <div className="rounded-[1.4rem] bg-white px-4 py-4 ring-1 ring-[#EEE7DF]">
                 <p className="text-[10px] uppercase tracking-[0.26em] text-[#8A6A4A]">
@@ -150,6 +137,16 @@ export default async function ProductDetailPage({
                 <p className="mt-2 text-sm leading-6 text-[#666666]">
                   Gentle wash recommended to help preserve the fabric feel, shape,
                   and finish.
+                </p>
+              </div>
+
+                            <div className="rounded-[1.4rem] bg-white px-4 py-4 ring-1 ring-[#EEE7DF]">
+                <p className="text-[10px] uppercase tracking-[0.26em] text-[#8A6A4A]">
+                  Delivery
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[#666666]">
+                  Delivery available inside Kathmandu. Contact on WhatsApp for
+                  timing and availability.
                 </p>
               </div>
             </div>

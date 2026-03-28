@@ -78,7 +78,7 @@ export default function HomePage() {
           {featuredProducts.map((product) => (
             <article
               key={product.id}
-              className="group min-w-[260px] flex-shrink-0 snap-start overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-[#EAE4DD] transition duration-500 hover:-translate-y-[2px] hover:shadow-[0_18px_40px_rgba(17,17,17,0.06)] hover:ring-[#E2D6CA]"
+              className="group min-w-[260px] flex-shrink-0 snap-start overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-[#EAE4DD] transition duration-500 hover:-translate-y-1 hover:shadow-xl hover:ring-[#E2D6CA]"
             >
               <Link href={`/products/${product.slug}`} className="block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#F6F1EB] p-4">
@@ -90,12 +90,12 @@ export default function HomePage() {
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-contain transition duration-700 ease-out group-hover:scale-[1.02]"
+                    className="object-contain transition duration-700 ease-out group-hover:scale-[1.03]"
                   />
                 </div>
               </Link>
 
-              <div className="px-4 pb-5 pt-4">
+              <div className="flex min-h-[220px] flex-col px-4 pb-5 pt-4">
                 <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
                   {product.category}
                 </p>
@@ -119,15 +119,15 @@ export default function HomePage() {
                   {product.description}
                 </p>
 
-                <div className="mt-4">
+                <div className="mt-auto pt-5">
                   <Link
                     href={`/products/${product.slug}`}
-                    className="inline-flex items-center text-[13px] font-medium tracking-[0.02em] text-[#111111] transition hover:text-[#7A1F2A]"
+                    className="inline-flex items-center text-[13px] font-medium tracking-[0.02em] text-[#111111] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#7A1F2A]"
                   >
-                    View Product
+                    View Product →
                   </Link>
 
-                  <div className="mt-1">
+                  <div className="mt-2 transition-all duration-300 group-hover:translate-x-1">
                     <ProductQuickOrder productName={product.name} />
                   </div>
                 </div>
@@ -141,7 +141,7 @@ export default function HomePage() {
           {featuredProducts.map((product) => (
             <article
               key={product.id}
-              className="group overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-[#EAE4DD] transition duration-500 hover:-translate-y-[2px] hover:shadow-[0_18px_40px_rgba(17,17,17,0.06)] hover:ring-[#E2D6CA]"
+              className="group overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-[#EAE4DD] transition duration-500 hover:-translate-y-1 hover:shadow-xl hover:ring-[#E2D6CA]"
             >
               <Link href={`/products/${product.slug}`} className="block">
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#F6F1EB] p-5">
@@ -153,12 +153,12 @@ export default function HomePage() {
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-contain transition duration-700 ease-out group-hover:scale-[1.02]"
+                    className="object-contain transition duration-700 ease-out group-hover:scale-[1.03]"
                   />
                 </div>
               </Link>
 
-              <div className="px-5 pb-6 pt-5">
+              <div className="flex min-h-[250px] flex-col px-5 pb-6 pt-5">
                 <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
                   {product.category}
                 </p>
@@ -182,15 +182,15 @@ export default function HomePage() {
                   {product.description}
                 </p>
 
-                <div className="mt-5">
+                <div className="mt-auto pt-6">
                   <Link
                     href={`/products/${product.slug}`}
-                    className="inline-flex items-center text-[13px] font-medium tracking-[0.02em] text-[#111111] transition hover:text-[#7A1F2A] sm:text-sm"
+                    className="inline-flex items-center text-[13px] font-medium tracking-[0.02em] text-[#111111] transition-all duration-300 group-hover:translate-x-1 group-hover:text-[#7A1F2A] sm:text-sm"
                   >
-                    View Product
+                    View Product →
                   </Link>
 
-                  <div className="mt-1">
+                  <div className="mt-2 transition-all duration-300 group-hover:translate-x-1">
                     <ProductQuickOrder productName={product.name} />
                   </div>
                 </div>
@@ -265,26 +265,26 @@ export default function HomePage() {
       </section>
 
       {/* TRUST SECTION */}
-<section className="mt-12 grid grid-cols-1 gap-5 pb-4 md:grid-cols-3">
-  {trustItems.map((item) => (
-    <div
-      key={item.title}
-      className="rounded-[1.8rem] bg-[#FCFAF8] px-6 py-6 ring-1 ring-[#EEE7DF] transition duration-300 hover:-translate-y-[2px] hover:shadow-[0_12px_30px_rgba(17,17,17,0.05)]"
-    >
-      <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
-        AAWASE
-      </p>
+      <section className="mt-12 grid grid-cols-1 gap-5 pb-4 md:grid-cols-3">
+        {trustItems.map((item) => (
+          <div
+            key={item.title}
+            className="rounded-[1.8rem] bg-[#FCFAF8] px-6 py-6 ring-1 ring-[#EEE7DF] transition duration-300 hover:-translate-y-[2px] hover:shadow-[0_12px_30px_rgba(17,17,17,0.05)]"
+          >
+            <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
+              AAWASE
+            </p>
 
-      <h3 className="mt-3 text-lg font-semibold text-[#111111]">
-        {item.title}
-      </h3>
+            <h3 className="mt-3 text-lg font-semibold text-[#111111]">
+              {item.title}
+            </h3>
 
-      <p className="mt-2 text-sm leading-7 text-[#6B6B6B]">
-        {item.description}
-      </p>
-    </div>
-  ))}
-</section>
+            <p className="mt-2 text-sm leading-7 text-[#6B6B6B]">
+              {item.description}
+            </p>
+          </div>
+        ))}
+      </section>
 
       {/* ABOUT AAWASE */}
       <section className="mt-10 rounded-[2rem] bg-[#FCFAF8] px-6 py-10 sm:px-8 sm:py-12 lg:px-10">
@@ -300,14 +300,15 @@ export default function HomePage() {
 
             <p className="mt-4 text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
               Aawase is built around simplicity, elegance, and everyday comfort.
-              Each piece is thoughtfully selected to bring a balance of modern style
-              and traditional inspiration. We focus on making fashion easy to browse,
-              easy to choose, and easy to order.
+              Each piece is thoughtfully selected to bring a balance of modern
+              style and traditional inspiration. We focus on making fashion easy
+              to browse, easy to choose, and easy to order.
             </p>
 
             <p className="mt-4 text-sm leading-7 text-gray-600 sm:text-base sm:leading-8">
-              Whether for daily wear or special occasions, our collection is designed
-              to help you feel confident with minimal effort and maximum comfort.
+              Whether for daily wear or special occasions, our collection is
+              designed to help you feel confident with minimal effort and
+              maximum comfort.
             </p>
 
             <Link
