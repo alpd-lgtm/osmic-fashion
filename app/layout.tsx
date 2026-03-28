@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aawase",
+  title: "Suzi Store",
   description: "Elegant fashion pieces for every occasion",
 };
 

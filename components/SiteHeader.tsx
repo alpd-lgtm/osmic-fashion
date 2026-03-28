@@ -20,7 +20,7 @@ export default function SiteHeader() {
             href="/"
             className="text-[18px] font-medium tracking-[0.32em] text-[#111111] transition hover:opacity-80"
           >
-            AAWASE
+            SUZI Fashion
           </Link>
 
           <nav className="hidden items-center gap-8 text-sm font-medium text-[#5B5B5B] lg:flex">
