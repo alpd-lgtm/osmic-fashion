@@ -106,6 +106,14 @@ export default async function ProductDetailPage({
   </Link>
 </div>
 
+<div className="mt-5 rounded-[1.2rem] bg-[#FCFAF8] px-4 py-4 ring-1 ring-[#EEE7DF]">
+  <div className="space-y-2 text-sm text-[#666666]">
+    <p>✔ Cash on Delivery available</p>
+    <p>✔ Delivery inside Kathmandu</p>
+    <p>✔ Easy WhatsApp ordering</p>
+  </div>
+</div>
+
             <div className="mt-7 rounded-[1.5rem] bg-[#FCFAF8] px-5 py-5 ring-1 ring-[#EEE7DF]">
               <p className="text-sm leading-7 text-[#666666]">
                 Simple ordering available through WhatsApp with the product name,

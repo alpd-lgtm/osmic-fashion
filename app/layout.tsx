@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import SiteHeader from "@/components/SiteHeader";
+import StickyWhatsAppButton from "@/components/StickyWhatsAppButton";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -112,6 +113,8 @@ export default function RootLayout({
             </div>
           </footer>
         </div>
+
+        <StickyWhatsAppButton />
       </body>
     </html>
   );

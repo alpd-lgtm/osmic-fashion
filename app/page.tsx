@@ -50,23 +50,24 @@ export default function HomePage() {
   const featuredProducts = products.slice(0, 4);
 
   return (
-    <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-6 sm:px-6 sm:pt-6 sm:pb-8 lg:px-8">
+    <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-24 sm:px-6 sm:pt-6 sm:pb-28 lg:px-8">
       <HeroSlider />
 
-      <section className="mt-8 rounded-[2rem] bg-[#FCFAF8] px-4 py-8 sm:mt-10 sm:px-6 sm:py-9">
+      {/* FEATURED PRODUCTS */}
+      <section className="mt-8 rounded-[2rem] bg-[#FCFAF8] px-5 py-8 ring-1 ring-[#EEE7DF] sm:mt-10 sm:px-7 sm:py-10">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-[#7A1F2A]">
+            <p className="text-[10px] uppercase tracking-[0.32em] text-[#8A6A4A] sm:text-[11px]">
               Featured
             </p>
-            <h2 className="mt-2 text-2xl font-bold text-[#111111] sm:text-3xl">
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.02em] text-[#111111] sm:text-4xl">
               Featured Products
             </h2>
           </div>
 
           <Link
             href="/products"
-            className="text-sm font-medium text-gray-600 underline underline-offset-4 transition hover:text-[#7A1F2A]"
+            className="text-sm font-medium text-[#6B6B6B] underline underline-offset-4 transition hover:text-[#7A1F2A]"
           >
             View all
           </Link>
@@ -77,11 +78,11 @@ export default function HomePage() {
           {featuredProducts.map((product) => (
             <article
               key={product.id}
-              className="group min-w-[260px] flex-shrink-0 snap-start rounded-3xl bg-white p-3.5 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="group min-w-[260px] flex-shrink-0 snap-start overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-[#EAE4DD] transition duration-500 hover:-translate-y-[2px] hover:shadow-[0_18px_40px_rgba(17,17,17,0.06)] hover:ring-[#E2D6CA]"
             >
               <Link href={`/products/${product.slug}`} className="block">
-                <div className="relative h-[260px] w-full overflow-hidden rounded-[1.75rem] bg-[#FAF7F3] ring-1 ring-gray-100">
-                  <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[11px] font-medium text-white">
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#F6F1EB] p-4">
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
                     New
                   </span>
 
@@ -89,39 +90,46 @@ export default function HomePage() {
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-contain p-4 transition duration-500 ease-out group-hover:scale-[1.05]"
+                    className="object-contain transition duration-700 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
               </Link>
 
-              <div className="mt-3.5">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-[#7A1F2A]">
+              <div className="px-4 pb-5 pt-4">
+                <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
                   {product.category}
                 </p>
 
-                <div className="mt-2 flex items-start justify-between gap-3">
-                  <h3 className="text-base font-semibold leading-snug text-[#111111]">
-                    <Link href={`/products/${product.slug}`}>{product.name}</Link>
+                <div className="mt-2 flex flex-col gap-1">
+                  <h3 className="text-[17px] font-semibold leading-snug text-[#111111]">
+                    <Link
+                      href={`/products/${product.slug}`}
+                      className="transition hover:text-[#7A1F2A]"
+                    >
+                      {product.name}
+                    </Link>
                   </h3>
 
-                  <p className="shrink-0 text-sm font-semibold text-[#111111]">
+                  <p className="text-[15px] font-normal text-[#5B5B5B]">
                     NPR {product.price}
                   </p>
                 </div>
 
-                <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
+                <p className="mt-3 line-clamp-2 text-[13px] leading-6 text-[#6B6B6B]">
                   {product.description}
                 </p>
 
-                <div className="mt-4 flex flex-col">
+                <div className="mt-4">
                   <Link
                     href={`/products/${product.slug}`}
-                    className="inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
+                    className="inline-flex items-center text-[13px] font-medium tracking-[0.02em] text-[#111111] transition hover:text-[#7A1F2A]"
                   >
                     View Product
                   </Link>
 
-                  <ProductQuickOrder productName={product.name} />
+                  <div className="mt-1">
+                    <ProductQuickOrder productName={product.name} />
+                  </div>
                 </div>
               </div>
             </article>
@@ -133,11 +141,11 @@ export default function HomePage() {
           {featuredProducts.map((product) => (
             <article
               key={product.id}
-              className="group rounded-3xl bg-white p-3.5 ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-lg hover:ring-[#7A1F2A]/20"
+              className="group overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-[#EAE4DD] transition duration-500 hover:-translate-y-[2px] hover:shadow-[0_18px_40px_rgba(17,17,17,0.06)] hover:ring-[#E2D6CA]"
             >
               <Link href={`/products/${product.slug}`} className="block">
-                <div className="relative h-[300px] w-full overflow-hidden rounded-[1.75rem] bg-[#FAF7F3] ring-1 ring-gray-100 sm:h-[340px]">
-                  <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[11px] font-medium text-white">
+                <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#F6F1EB] p-5">
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-[#7A1F2A] px-3 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-white">
                     New
                   </span>
 
@@ -145,39 +153,46 @@ export default function HomePage() {
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-contain p-4 transition duration-500 ease-out group-hover:scale-[1.05]"
+                    className="object-contain transition duration-700 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
               </Link>
 
-              <div className="mt-4">
-                <p className="text-xs uppercase tracking-[0.18em] text-[#7A1F2A]">
+              <div className="px-5 pb-6 pt-5">
+                <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
                   {product.category}
                 </p>
 
-                <div className="mt-2 flex items-start justify-between gap-4">
-                  <h3 className="text-lg font-semibold leading-snug text-[#111111]">
-                    <Link href={`/products/${product.slug}`}>{product.name}</Link>
+                <div className="mt-2 flex flex-col gap-1">
+                  <h3 className="text-[19px] font-semibold leading-snug text-[#111111]">
+                    <Link
+                      href={`/products/${product.slug}`}
+                      className="transition hover:text-[#7A1F2A]"
+                    >
+                      {product.name}
+                    </Link>
                   </h3>
 
-                  <p className="shrink-0 text-sm font-semibold text-[#111111] sm:text-base">
+                  <p className="text-[15px] font-normal text-[#5B5B5B] sm:text-base">
                     NPR {product.price}
                   </p>
                 </div>
 
-                <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
+                <p className="mt-3 line-clamp-2 text-[13px] leading-6 text-[#6B6B6B] sm:text-sm sm:leading-7">
                   {product.description}
                 </p>
 
-                <div className="mt-4 flex flex-col">
+                <div className="mt-5">
                   <Link
                     href={`/products/${product.slug}`}
-                    className="inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
+                    className="inline-flex items-center text-[13px] font-medium tracking-[0.02em] text-[#111111] transition hover:text-[#7A1F2A] sm:text-sm"
                   >
                     View Product
                   </Link>
 
-                  <ProductQuickOrder productName={product.name} />
+                  <div className="mt-1">
+                    <ProductQuickOrder productName={product.name} />
+                  </div>
                 </div>
               </div>
             </article>
@@ -250,21 +265,26 @@ export default function HomePage() {
       </section>
 
       {/* TRUST SECTION */}
-      <section className="mt-10 grid grid-cols-1 gap-5 pb-4 md:grid-cols-3">
-        {trustItems.map((item) => (
-          <div
-            key={item.title}
-            className="rounded-3xl bg-white p-6 ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-md"
-          >
-            <h3 className="text-lg font-semibold text-[#111111]">
-              {item.title}
-            </h3>
-            <p className="mt-2 text-sm leading-6 text-gray-600">
-              {item.description}
-            </p>
-          </div>
-        ))}
-      </section>
+<section className="mt-12 grid grid-cols-1 gap-5 pb-4 md:grid-cols-3">
+  {trustItems.map((item) => (
+    <div
+      key={item.title}
+      className="rounded-[1.8rem] bg-[#FCFAF8] px-6 py-6 ring-1 ring-[#EEE7DF] transition duration-300 hover:-translate-y-[2px] hover:shadow-[0_12px_30px_rgba(17,17,17,0.05)]"
+    >
+      <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
+        AAWASE
+      </p>
+
+      <h3 className="mt-3 text-lg font-semibold text-[#111111]">
+        {item.title}
+      </h3>
+
+      <p className="mt-2 text-sm leading-7 text-[#6B6B6B]">
+        {item.description}
+      </p>
+    </div>
+  ))}
+</section>
 
       {/* ABOUT AAWASE */}
       <section className="mt-10 rounded-[2rem] bg-[#FCFAF8] px-6 py-10 sm:px-8 sm:py-12 lg:px-10">
