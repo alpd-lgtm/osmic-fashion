@@ -27,9 +27,11 @@ export default function SiteHeader() {
             <Link href="/" className="transition hover:text-[#7A1F2A]">
               Home
             </Link>
+
             <Link href="/products" className="transition hover:text-[#7A1F2A]">
               Shop
             </Link>
+
             <Link
               href="/products?category=kurtha"
               className="transition hover:text-[#7A1F2A]"

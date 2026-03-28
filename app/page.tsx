@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { products } from "@/lib/products";
 import HeroSlider from "@/components/HeroSlider";
+import ProductQuickOrder from "@/components/ProductQuickOrder";
 
 const categories = [
   {
@@ -52,7 +53,6 @@ export default function HomePage() {
     <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-6 sm:px-6 sm:pt-6 sm:pb-8 lg:px-8">
       <HeroSlider />
 
-      {/* FEATURED PRODUCTS */}
       <section className="mt-8 rounded-[2rem] bg-[#FCFAF8] px-4 py-8 sm:mt-10 sm:px-6 sm:py-9">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
@@ -113,12 +113,16 @@ export default function HomePage() {
                   {product.description}
                 </p>
 
-                <Link
-                  href={`/products/${product.slug}`}
-                  className="mt-4 inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
-                >
-                  View Product
-                </Link>
+                <div className="mt-4 flex flex-col">
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
+                  >
+                    View Product
+                  </Link>
+
+                  <ProductQuickOrder productName={product.name} />
+                </div>
               </div>
             </article>
           ))}
@@ -165,12 +169,16 @@ export default function HomePage() {
                   {product.description}
                 </p>
 
-                <Link
-                  href={`/products/${product.slug}`}
-                  className="mt-4 inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
-                >
-                  View Product
-                </Link>
+                <div className="mt-4 flex flex-col">
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="inline-flex items-center text-sm font-medium text-[#111111] underline underline-offset-4 transition hover:text-[#7A1F2A]"
+                  >
+                    View Product
+                  </Link>
+
+                  <ProductQuickOrder productName={product.name} />
+                </div>
               </div>
             </article>
           ))}

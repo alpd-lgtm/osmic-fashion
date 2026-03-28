@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { products } from "@/lib/products";
-import AddToCartButton from "@/components/AddToCartButton";
+import ProductOrderWithSize from "@/components/ProductOrderWithSize";
 
 export default async function ProductDetailPage({
   params,
@@ -22,12 +22,6 @@ export default async function ProductDetailPage({
       (item) => item.category === product.category && item.slug !== product.slug
     )
     .slice(0, 3);
-
-  const whatsappNumber = "9779800000000";
-  const whatsappMessage = encodeURIComponent(
-    `Hello, I want to order "${product.name}" for NPR ${product.price}. Please share availability and delivery details.`
-  );
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (
     <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-8 sm:px-6 sm:pt-5 lg:px-8">
@@ -94,25 +88,11 @@ export default async function ProductDetailPage({
               </div>
             </div>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-[#7A1F2A] px-7 py-3 text-sm font-semibold text-white transition hover:scale-[1.03] hover:opacity-95"
-              >
-                Order on WhatsApp
-              </a>
-
-              <AddToCartButton
-                product={{
-                  id: product.id,
-                  name: product.name,
-                  slug: product.slug,
-                  price: product.price,
-                  image: product.image,
-                  category: product.category,
-                }}
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+              <ProductOrderWithSize
+                name={product.name}
+                price={product.price}
+                 slug={product.slug}
               />
 
               <Link
@@ -125,8 +105,8 @@ export default async function ProductDetailPage({
 
             <div className="mt-6 rounded-[1.25rem] bg-[#FCFAF8] px-4 py-4 ring-1 ring-gray-100">
               <p className="text-sm leading-6 text-gray-600">
-                Simple ordering available through WhatsApp with the product name
-                already filled in for faster checkout.
+                Simple ordering available through WhatsApp with the product name,
+                selected size, and product link already filled in for faster checkout.
               </p>
             </div>
 
