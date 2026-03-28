@@ -6,6 +6,7 @@ export type Product = {
   price: number;
   image: string;
   description: string;
+  sizes: string[];
 };
 
 export const products: Product[] = [
@@ -17,6 +18,7 @@ export const products: Product[] = [
     price: 2500,
     image: "/products/kurtha-1.avif",
     description: "Elegant red kurtha for festive and daily wear.",
+    sizes: ["S", "M"],   // 👈 ADD THIS
   },
   {
     id: 2,
@@ -26,6 +28,7 @@ export const products: Product[] = [
     price: 2800,
     image: "/products/kurtha-2.webp",
     description: "Stylish blue kurtha with a clean modern finish.",
+    sizes: ["S", "M" , "L"],
   },
   {
     id: 3,
@@ -35,6 +38,7 @@ export const products: Product[] = [
     price: 3000,
     image: "/products/kurtha-3.jpg",
     description: "Classic kurtha design made for comfort and elegance.",
+    sizes: ["S", "M" , "L" , "XL"],
   },
   {
     id: 4,
@@ -44,6 +48,7 @@ export const products: Product[] = [
     price: 4200,
     image: "/products/saree-1.webp",
     description: "Beautiful green saree with graceful traditional styling.",
+    sizes: ["S", "M" , "L" , "XL"],
   },
   {
     id: 5,
@@ -53,6 +58,7 @@ export const products: Product[] = [
     price: 4600,
     image: "/products/saree-2.jpg",
     description: "Soft pink saree perfect for festive and family occasions.",
+    sizes: ["S", "M" , "L" , "XL"],
   },
   {
     id: 6,
@@ -62,6 +68,7 @@ export const products: Product[] = [
     price: 4900,
     image: "/products/saree-3.webp",
     description: "Elegant saree with rich traditional appeal.",
+    sizes: ["S", "M" , "L" , "XL"],
   },
   {
     id: 7,
@@ -71,6 +78,7 @@ export const products: Product[] = [
     price: 1800,
     image: "/products/top-2.webp",
     description: "Modern casual top for everyday wear.",
+    sizes: ["S", "M" , "L" , "XL"],
   },
   {
     id: 8,
@@ -80,5 +88,6 @@ export const products: Product[] = [
     price: 2100,
     image: "/products/top-4.webp",
     description: "Trendy fashion top with a stylish silhouette.",
+    sizes: ["S", "M" , "L" , "XL"],
   },
 ];
