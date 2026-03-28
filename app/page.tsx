@@ -4,6 +4,7 @@ import { products } from "@/lib/products";
 import HeroSlider from "@/components/HeroSlider";
 import ProductQuickOrder from "@/components/ProductQuickOrder";
 
+
 const categories = [
   {
     name: "Kurthas",

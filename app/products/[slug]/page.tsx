@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { products } from "@/lib/products";
-import ProductOrderWithSize from "@/components/ProductOrderWithSize";
+import ProductPurchasePanel from "@/components/ProductPurchasePanel";
 
 export default async function ProductDetailPage({
   params,
@@ -90,33 +90,35 @@ export default async function ProductDetailPage({
               </div>
             </div>
 
-<div className="mt-7 flex flex-col gap-4">
-  <ProductOrderWithSize
-    name={product.name}
-    price={product.price}
-    slug={product.slug}
-    sizes={product.sizes}
-  />
+            <ProductPurchasePanel
+              product={{
+                id: product.id,
+                name: product.name,
+                slug: product.slug,
+                price: product.price,
+                image: product.image,
+              }}
+              sizes={product.sizes}
+            />
 
-  <Link
-    href="/products"
-    className="text-sm font-medium text-[#6B6B6B] underline underline-offset-4 transition hover:text-[#7A1F2A]"
-  >
-    Explore Collection
-  </Link>
-</div>
+            <div className="mt-4">
+              <Link
+                href="/products"
+                className="text-sm font-medium text-[#6B6B6B] underline underline-offset-4 transition hover:text-[#7A1F2A]"
+              >
+                Explore Collection
+              </Link>
+            </div>
 
-<div className="mt-5 rounded-[1.2rem] bg-[#FCFAF8] px-4 py-4 ring-1 ring-[#EEE7DF]">
-  <div className="space-y-2 text-sm text-[#666666]">
-    <p>✔ Cash on Delivery available</p>
-    <p>✔ Delivery inside Kathmandu</p>
-    <p>✔ Easy WhatsApp ordering</p>
-  </div>
-</div>
+            <div className="mt-5 rounded-[1.2rem] bg-[#FCFAF8] px-4 py-4 ring-1 ring-[#EEE7DF]">
+              <div className="space-y-2 text-sm text-[#666666]">
+                <p>✔ Cash on Delivery available</p>
+                <p>✔ Delivery inside Kathmandu</p>
+                <p>✔ Easy WhatsApp ordering</p>
+              </div>
+            </div>
 
-          
-
-          <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-3">
               <div className="rounded-[1.4rem] bg-white px-4 py-4 ring-1 ring-[#EEE7DF]">
                 <p className="text-[10px] uppercase tracking-[0.26em] text-[#8A6A4A]">
                   Size & Fit
@@ -126,9 +128,6 @@ export default async function ProductDetailPage({
                   styling.
                 </p>
               </div>
-              
-
-
 
               <div className="rounded-[1.4rem] bg-white px-4 py-4 ring-1 ring-[#EEE7DF]">
                 <p className="text-[10px] uppercase tracking-[0.26em] text-[#8A6A4A]">
@@ -140,7 +139,7 @@ export default async function ProductDetailPage({
                 </p>
               </div>
 
-                            <div className="rounded-[1.4rem] bg-white px-4 py-4 ring-1 ring-[#EEE7DF]">
+              <div className="rounded-[1.4rem] bg-white px-4 py-4 ring-1 ring-[#EEE7DF]">
                 <p className="text-[10px] uppercase tracking-[0.26em] text-[#8A6A4A]">
                   Delivery
                 </p>

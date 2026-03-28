@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useCart } from "@/components/CartProvider";
 
 export default function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // change this later to real cart count
-  const cartCount = 0;
+  const { cartCount } = useCart();
 
   return (
     <>
@@ -63,7 +62,7 @@ export default function SiteHeader() {
             href="/"
             className="text-xl font-semibold tracking-[0.12em] text-[#111111] sm:text-2xl"
           >
-            Suzie
+            AAWASE
           </Link>
 
           {/* RIGHT SIDE */}
