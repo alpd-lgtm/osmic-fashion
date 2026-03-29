@@ -9,6 +9,7 @@ type AddToCartButtonProps = {
     slug: string;
     price: number;
     image: string;
+    size: string;
   };
 };
 
@@ -20,7 +21,7 @@ export default function AddToCartButton({
   return (
     <button
       onClick={() => addToCart(product)}
-      className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto sm:self-start"
+      className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#641923]"
     >
       Add to Cart
     </button>

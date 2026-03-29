@@ -62,7 +62,7 @@ export default function SiteHeader() {
             href="/"
             className="text-xl font-semibold tracking-[0.12em] text-[#111111] sm:text-2xl"
           >
-            AAWASE
+            SUZIE
           </Link>
 
           {/* RIGHT SIDE */}
