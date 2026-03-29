@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useCart } from "@/components/CartProvider";
 
 type ProductPurchasePanelProps = {
@@ -20,12 +20,19 @@ export default function ProductPurchasePanel({
 }: ProductPurchasePanelProps) {
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState<string>(sizes[0] || "");
+  const [currentUrl, setCurrentUrl] = useState("");
 
-  const whatsappMessage = encodeURIComponent(
-    `Hi, I want to order:\nProduct: ${product.name}\nSize: ${selectedSize || "Not selected"}\nPrice: NPR ${product.price}\nLink: ${typeof window !== "undefined" ? window.location.href : ""}`
-  );
+  useEffect(() => {
+    setCurrentUrl(window.location.href);
+  }, []);
 
-  const whatsappUrl = `https://wa.me/9779800000000?text=${whatsappMessage}`;
+  const whatsappUrl = useMemo(() => {
+    const whatsappMessage = encodeURIComponent(
+      `Hi, I want to order:\nProduct: ${product.name}\nSize: ${selectedSize || "Not selected"}\nPrice: NPR ${product.price}\nLink: ${currentUrl}`
+    );
+
+    return `https://wa.me/9779800000000?text=${whatsappMessage}`;
+  }, [product.name, product.price, selectedSize, currentUrl]);
 
   return (
     <div className="mt-7 flex flex-col gap-4">
