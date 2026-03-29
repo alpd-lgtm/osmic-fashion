@@ -154,7 +154,7 @@ export default function SiteHeader() {
         <div className="fixed inset-0 z-50 bg-white lg:hidden">
           <div className="flex items-center justify-between border-b border-gray-100 px-4 py-4">
             <p className="text-lg font-semibold tracking-[0.08em] text-[#111111]">
-              AAWASE
+              SUZIE
             </p>
 
             <button
