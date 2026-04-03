@@ -1,379 +1,383 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
 
-type SavedOrder = {
-  id: string;
-  createdAt: string;
+type CheckoutForm = {
   fullName: string;
   phone: string;
-  method: "delivery" | "pickup";
-  paymentMethod: "card" | "cod";
   address: string;
   city: string;
-  pickupNote: string;
-  items: {
-    id: number;
-    name: string;
-    slug: string;
-    price: number;
-    image: string;
-    size: string;
-    quantity: number;
-  }[];
-  total: number;
+  notes: string;
 };
+
+type PaymentMethod = "cod" | "card";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cart, cartTotal, clearCart } = useCart();
+  const { cart, clearCart } = useCart();
 
-  const [method, setMethod] = useState<"delivery" | "pickup">("delivery");
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "cod">("card");
+  const [form, setForm] = useState<CheckoutForm>({
+    fullName: "",
+    phone: "",
+    address: "",
+    city: "Kathmandu",
+    notes: "",
+  });
 
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [pickupNote, setPickupNote] = useState("");
-  const [error, setError] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
+  const [loading, setLoading] = useState(false);
+
+  const subtotal = useMemo(() => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  }, [cart]);
+
+  const totalItems = useMemo(() => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  }, [cart]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handlePlaceOrder = () => {
-    setError("");
+    if (cart.length === 0) return;
 
-    if (!fullName.trim() || !phone.trim()) {
-      setError("Please fill in your full name and phone number.");
+    if (!form.fullName.trim() || !form.phone.trim() || !form.address.trim()) {
+      alert("Please fill in your name, phone number, and address.");
       return;
     }
 
-    if (method === "delivery") {
-      if (!address.trim() || !city.trim()) {
-        setError("Please fill in your delivery address and city / area.");
-        return;
-      }
+    setLoading(true);
 
-      if (paymentMethod === "card") {
-        setError(
-          "For now, please use Cash on Delivery. Card payment will be added later."
-        );
-        return;
-      }
-    }
+    try {
+      const orderId = `ORD-${Date.now()}`;
 
-    const newOrder: SavedOrder = {
-      id: `ORD-${Date.now()}`,
-      createdAt: new Date().toISOString(),
-      fullName: fullName.trim(),
-      phone: phone.trim(),
-      method,
-      paymentMethod,
-      address: address.trim(),
-      city: city.trim(),
-      pickupNote: pickupNote.trim(),
-      items: cart,
-      total: cartTotal,
-    };
+      const order = {
+        id: orderId,
+        paymentMethod,
+        customer: {
+          fullName: form.fullName,
+          phone: form.phone,
+          address: form.address,
+          city: form.city,
+          notes: form.notes,
+        },
+        items: cart,
+        totalItems,
+        subtotal,
+        createdAt: new Date().toISOString(),
+      };
 
-    const existingOrders = localStorage.getItem("orders");
-    const parsedOrders: SavedOrder[] = existingOrders
-      ? JSON.parse(existingOrders)
-      : [];
+      const existingOrders = JSON.parse(localStorage.getItem("orders") || "[]");
 
-    localStorage.setItem("orders", JSON.stringify([newOrder, ...parsedOrders]));
-    localStorage.setItem("latestOrder", JSON.stringify(newOrder));
+      localStorage.setItem("orders", JSON.stringify([order, ...existingOrders]));
+      localStorage.setItem("lastOrder", JSON.stringify(order));
 
-    const orderLines = cart
-      .map(
-        (item, index) =>
-          `${index + 1}. ${item.name}\nSize: ${item.size}\nQty: ${item.quantity}\nPrice: NPR ${item.price}\nSubtotal: NPR ${item.price * item.quantity}`
-      )
-      .join("\n\n");
+      const productLines = cart
+        .map(
+          (item, index) =>
+            `${index + 1}. ${item.name} | Size: ${item.size} | Qty: ${
+              item.quantity
+            } | NPR ${(item.price * item.quantity).toLocaleString()}`
+        )
+        .join("\n");
 
-    const message =
-      method === "delivery"
-        ? `Hi, I want to place an order.
+      const whatsappMessage = encodeURIComponent(
+        `Hello, I want to place an order.
 
-Order ID: ${newOrder.id}
-Order Type: Delivery
+Order ID: ${orderId}
+
+Customer Details:
+Name: ${form.fullName}
+Phone: ${form.phone}
+Address: ${form.address}
+City: ${form.city}
+Notes: ${form.notes || "None"}
 Payment Method: ${
-            paymentMethod === "cod" ? "Cash on Delivery" : "Card"
-          }
+          paymentMethod === "cod" ? "Cash on Delivery" : "Pay by Card"
+        }
 
-Customer Details:
-Name: ${fullName}
-Phone: ${phone}
-Address: ${address}
-City/Area: ${city}
+Order Items:
+${productLines}
 
-Items:
-${orderLines}
+Total Items: ${totalItems}
+Subtotal: NPR ${subtotal.toLocaleString()}`
+      );
 
-Total: NPR ${cartTotal}`
-        : `Hi, I want to place an order.
+      const whatsappNumber = "9779800000000";
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
-Order ID: ${newOrder.id}
-Order Type: Click & Collect
+      window.open(whatsappUrl, "_blank");
 
-Customer Details:
-Name: ${fullName}
-Phone: ${phone}
-Pickup Note: ${pickupNote || "None"}
-
-Items:
-${orderLines}
-
-Total: NPR ${cartTotal}`;
-
-    const whatsappUrl = `https://wa.me/9779767483750?text=${encodeURIComponent(
-      message
-    )}`;
-
-    window.open(whatsappUrl, "_blank");
-
-    clearCart();
-    router.push("/order-success");
+      clearCart();
+      router.push(`/order-success?orderId=${orderId}`);
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Something went wrong while placing the order.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (cart.length === 0) {
     return (
-      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-        <section className="rounded-[2rem] bg-[#FCFAF8] px-6 py-12 text-center ring-1 ring-[#EEE7DF]">
-          <p className="text-[11px] uppercase tracking-[0.28em] text-[#8A6A4A]">
-            Checkout
-          </p>
-          <h1 className="mt-3 text-3xl font-semibold text-[#111111]">
+      <main className="mx-auto min-h-[70vh] max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+          <h1 className="text-2xl font-semibold text-gray-900">
             Your cart is empty
           </h1>
-          <p className="mt-4 text-sm leading-7 text-gray-600">
+          <p className="mt-3 text-sm text-gray-600">
             Add some products before going to checkout.
           </p>
+
           <Link
             href="/products"
-            className="mt-6 inline-flex min-h-[48px] items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
+            className="mt-6 inline-flex rounded-full bg-black px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
           >
-            Browse Products
+            Shop Products
           </Link>
-        </section>
+        </div>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <section className="rounded-[2rem] bg-[#FCFAF8] px-5 py-8 ring-1 ring-[#EEE7DF] sm:px-7 sm:py-10">
-        <p className="text-[11px] uppercase tracking-[0.28em] text-[#8A6A4A]">
+    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mb-8">
+        <p className="text-sm text-gray-500">Home / Cart / Checkout</p>
+        <h1 className="mt-2 text-2xl font-semibold text-gray-900 sm:text-3xl">
           Checkout
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold text-[#111111] sm:text-4xl">
-          Complete Your Order
         </h1>
-        <p className="mt-3 text-sm leading-7 text-gray-600">
-          Choose delivery or click & collect, then complete your order.
+        <p className="mt-2 text-sm text-gray-600">
+          Fill your details and confirm your order through WhatsApp.
         </p>
-      </section>
+      </div>
 
-      <section className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="space-y-6">
-          <div className="rounded-[1.75rem] bg-white p-5 ring-1 ring-[#EAE4DD] sm:p-6">
-            <h2 className="text-lg font-semibold text-[#111111]">
-              Fulfillment Method
-            </h2>
-
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <button
-                type="button"
-                onClick={() => setMethod("delivery")}
-                className={`min-h-[48px] rounded-full px-4 py-3 text-sm font-medium transition ${
-                  method === "delivery"
-                    ? "bg-[#7A1F2A] text-white"
-                    : "border border-[#E7DED5] text-[#111111] hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
-                }`}
-              >
-                Delivery
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setMethod("pickup")}
-                className={`min-h-[48px] rounded-full px-4 py-3 text-sm font-medium transition ${
-                  method === "pickup"
-                    ? "bg-[#7A1F2A] text-white"
-                    : "border border-[#E7DED5] text-[#111111] hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
-                }`}
-              >
-                Click & Collect
-              </button>
-            </div>
-          </div>
-
-          <div className="rounded-[1.75rem] bg-white p-5 ring-1 ring-[#EAE4DD] sm:p-6">
-            <h2 className="text-lg font-semibold text-[#111111]">
-              {method === "delivery" ? "Delivery Details" : "Pickup Details"}
-            </h2>
-
-            <div className="mt-5 space-y-4">
-              <input
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="Full Name"
-                className="min-h-[48px] w-full rounded-full border border-[#E7DED5] px-4 py-3 text-sm text-[#111111] outline-none transition placeholder:text-gray-400 focus:border-[#7A1F2A]"
-              />
-
-              <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Phone Number"
-                className="min-h-[48px] w-full rounded-full border border-[#E7DED5] px-4 py-3 text-sm text-[#111111] outline-none transition placeholder:text-gray-400 focus:border-[#7A1F2A]"
-              />
-
-              {method === "delivery" ? (
-                <>
-                  <input
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Delivery Address"
-                    className="min-h-[48px] w-full rounded-full border border-[#E7DED5] px-4 py-3 text-sm text-[#111111] outline-none transition placeholder:text-gray-400 focus:border-[#7A1F2A]"
-                  />
-
-                  <input
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    placeholder="City / Area"
-                    className="min-h-[48px] w-full rounded-full border border-[#E7DED5] px-4 py-3 text-sm text-[#111111] outline-none transition placeholder:text-gray-400 focus:border-[#7A1F2A]"
-                  />
-                </>
-              ) : (
-                <input
-                  value={pickupNote}
-                  onChange={(e) => setPickupNote(e.target.value)}
-                  placeholder="Pickup Date / Note"
-                  className="min-h-[48px] w-full rounded-full border border-[#E7DED5] px-4 py-3 text-sm text-[#111111] outline-none transition placeholder:text-gray-400 focus:border-[#7A1F2A]"
-                />
-              )}
-            </div>
-          </div>
-
-          {method === "delivery" && (
-            <div className="rounded-[1.75rem] bg-white p-5 ring-1 ring-[#EAE4DD] sm:p-6">
-              <h2 className="text-lg font-semibold text-[#111111]">
-                Payment Method
-              </h2>
-
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("card")}
-                  className={`min-h-[48px] rounded-full px-4 py-3 text-sm font-medium transition ${
-                    paymentMethod === "card"
-                      ? "bg-[#7A1F2A] text-white"
-                      : "border border-[#E7DED5] text-[#111111] hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
-                  }`}
-                >
-                  Pay by Card
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod("cod")}
-                  className={`min-h-[48px] rounded-full px-4 py-3 text-sm font-medium transition ${
-                    paymentMethod === "cod"
-                      ? "bg-[#7A1F2A] text-white"
-                      : "border border-[#E7DED5] text-[#111111] hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
-                  }`}
-                >
-                  Cash on Delivery
-                </button>
-              </div>
-
-              <p className="mt-4 text-sm leading-6 text-gray-600">
-                {paymentMethod === "card"
-                  ? "Card payment can be added later. For now, use Cash on Delivery."
-                  : "Customer will pay when the order is delivered."}
-              </p>
-            </div>
-          )}
-
-          {error && (
-            <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-              {error}
-            </p>
-          )}
-
-          <p className="text-sm text-gray-600">
-            You will be redirected to WhatsApp to confirm your order.
-          </p>
-
-          <button
-            type="button"
-            onClick={handlePlaceOrder}
-            className="inline-flex min-h-[52px] w-full items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
-          >
-            {method === "delivery"
-              ? paymentMethod === "card"
-                ? "Continue to Card Payment"
-                : "Send Order on WhatsApp"
-              : "Send Pickup Order on WhatsApp"}
-          </button>
-        </div>
-
-        <aside className="h-fit rounded-[1.75rem] bg-white p-5 ring-1 ring-[#EAE4DD] sm:p-6">
-          <p className="text-[11px] uppercase tracking-[0.28em] text-[#8A6A4A]">
-            Summary
-          </p>
-          <h2 className="mt-2 text-2xl font-semibold text-[#111111]">
-            Order Summary
+      <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+        <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-900">
+            Shipping Details
           </h2>
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="fullName"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
+                Full Name
+              </label>
+              <input
+                id="fullName"
+                name="fullName"
+                type="text"
+                value={form.fullName}
+                onChange={handleChange}
+                placeholder="Enter your full name"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="phone"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
+                Phone Number
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="text"
+                value={form.phone}
+                onChange={handleChange}
+                placeholder="98XXXXXXXX"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="city"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
+                City
+              </label>
+              <input
+                id="city"
+                name="city"
+                type="text"
+                value={form.city}
+                onChange={handleChange}
+                placeholder="Kathmandu"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black"
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="address"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
+                Delivery Address
+              </label>
+              <input
+                id="address"
+                name="address"
+                type="text"
+                value={form.address}
+                onChange={handleChange}
+                placeholder="Enter your delivery address"
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black"
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="notes"
+                className="mb-2 block text-sm font-medium text-gray-700"
+              >
+                Order Notes (Optional)
+              </label>
+              <textarea
+                id="notes"
+                name="notes"
+                rows={4}
+                value={form.notes}
+                onChange={handleChange}
+                placeholder="Color preference, landmark, delivery time, etc."
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black"
+              />
+            </div>
+          </div>
+
+          <div className="mt-8 rounded-2xl border border-gray-200 p-5">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Payment Method
+            </h2>
+
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("card")}
+                className={`flex-1 rounded-full border px-5 py-3 text-sm font-medium transition ${
+                  paymentMethod === "card"
+                    ? "border-black bg-black text-white"
+                    : "border-gray-300 bg-white text-gray-800 hover:bg-gray-50"
+                }`}
+              >
+                Pay by Card
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPaymentMethod("cod")}
+                className={`flex-1 rounded-full border px-5 py-3 text-sm font-medium transition ${
+                  paymentMethod === "cod"
+                    ? "border-[#7A1F2A] bg-[#7A1F2A] text-white"
+                    : "border-gray-300 bg-white text-gray-800 hover:bg-gray-50"
+                }`}
+              >
+                Cash on Delivery
+              </button>
+            </div>
+
+            <p className="mt-4 text-sm text-gray-600">
+              {paymentMethod === "cod"
+                ? "Customer will pay when the order is delivered."
+                : "Card payment is selected. You can connect a real payment gateway later."}
+            </p>
+          </div>
+
+          <div className="mt-6 rounded-2xl bg-[#faf7f3] p-4 text-sm text-gray-700">
+            After clicking <span className="font-semibold">Place Order</span>,
+            your order will:
+            <br />
+            1. Be saved in localStorage
+            <br />
+            2. Open WhatsApp with order details
+            <br />
+            3. Redirect to success page
+          </div>
+        </section>
+
+        <aside className="h-fit rounded-2xl border border-gray-200 bg-[#faf7f3] p-5 shadow-sm lg:sticky lg:top-24">
+          <h2 className="text-lg font-semibold text-gray-900">Order Summary</h2>
 
           <div className="mt-5 space-y-4">
             {cart.map((item) => (
               <div
                 key={`${item.id}-${item.size}`}
-                className="flex items-start justify-between gap-3 border-b border-[#F1ECE6] pb-4 last:border-b-0 last:pb-0"
+                className="flex items-start justify-between gap-4 border-b border-gray-200 pb-4"
               >
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-[#111111]">
+                  <p className="line-clamp-2 text-sm font-medium text-gray-900">
                     {item.name}
                   </p>
-                  <p className="mt-1 text-sm text-gray-600">
+                  <p className="mt-1 text-xs text-gray-500">
                     Size: {item.size} · Qty: {item.quantity}
                   </p>
                 </div>
 
-                <p className="text-sm font-medium text-[#111111]">
-                  NPR {item.price * item.quantity}
+                <p className="shrink-0 text-sm font-semibold text-gray-900">
+                  NPR {(item.price * item.quantity).toLocaleString()}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between text-sm text-gray-600">
-            <span>Subtotal</span>
-            <span>NPR {cartTotal}</span>
+          <div className="mt-5 space-y-3 text-sm text-gray-700">
+            <div className="flex items-center justify-between">
+              <span>Items</span>
+              <span>{totalItems}</span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span>Subtotal</span>
+              <span>NPR {subtotal.toLocaleString()}</span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span>Payment</span>
+              <span>
+                {paymentMethod === "cod" ? "Cash on Delivery" : "Pay by Card"}
+              </span>
+            </div>
+
+            <div className="border-t border-gray-300 pt-3">
+              <div className="flex items-center justify-between text-base font-semibold text-gray-900">
+                <span>Total</span>
+                <span>NPR {subtotal.toLocaleString()}</span>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-3 flex items-center justify-between text-sm text-gray-600">
-            <span>{method === "delivery" ? "Delivery" : "Pickup"}</span>
-            <span>{method === "delivery" ? "Calculated later" : "Free"}</span>
-          </div>
-
-          <div className="mt-6 flex items-center justify-between border-t border-[#F1ECE6] pt-5">
-            <span className="text-base font-semibold text-[#111111]">Total</span>
-            <span className="text-xl font-semibold text-[#111111]">
-              NPR {cartTotal}
-            </span>
-          </div>
+          <button
+            onClick={handlePlaceOrder}
+            disabled={loading}
+            className="mt-6 flex w-full items-center justify-center rounded-full bg-black px-5 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loading ? "Processing..." : "Place Order"}
+          </button>
 
           <Link
             href="/cart"
-            className="mt-6 inline-flex w-full min-h-[48px] items-center justify-center rounded-full border border-[#E7DED5] px-6 py-3 text-sm font-medium text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+            className="mt-3 flex w-full items-center justify-center rounded-full border border-gray-300 bg-white px-5 py-3 text-sm font-medium text-gray-800 transition hover:bg-gray-50"
           >
             Back to Cart
           </Link>
         </aside>
-      </section>
+      </div>
     </main>
   );
 }

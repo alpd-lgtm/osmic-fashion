@@ -19,7 +19,6 @@ export default function SiteHeader() {
 
       <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-          {/* MOBILE MENU BUTTON */}
           <button
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
@@ -41,7 +40,6 @@ export default function SiteHeader() {
             </svg>
           </button>
 
-          {/* DESKTOP LEFT NAV */}
           <nav className="hidden items-center gap-8 lg:flex">
             <Link
               href="/"
@@ -55,9 +53,14 @@ export default function SiteHeader() {
             >
               Shop
             </Link>
+            <Link
+              href="/orders"
+              className="text-sm font-medium text-gray-700 transition hover:text-[#7A1F2A]"
+            >
+              Orders
+            </Link>
           </nav>
 
-          {/* LOGO */}
           <Link
             href="/"
             className="text-xl font-semibold tracking-[0.12em] text-[#111111] sm:text-2xl"
@@ -65,9 +68,7 @@ export default function SiteHeader() {
             SUZIE
           </Link>
 
-          {/* RIGHT SIDE */}
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* DESKTOP ICONS */}
             <div className="hidden items-center gap-2 lg:flex">
               <Link
                 href="/products"
@@ -86,6 +87,32 @@ export default function SiteHeader() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="m21 21-4.35-4.35m1.85-5.15a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </Link>
+
+              <Link
+                href="/orders"
+                aria-label="Orders"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#E7DED5] text-[#111111] transition hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-[18px] w-[18px]"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75A2.25 2.25 0 0 1 6 4.5h12a2.25 2.25 0 0 1 2.25 2.25v8.69a2.25 2.25 0 0 1-.659 1.591l-2.818 2.818a2.25 2.25 0 0 1-1.591.659H6A2.25 2.25 0 0 1 3.75 18.75V6.75Z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M7.5 8.25h9m-9 3h9m-9 3h4.5"
                   />
                 </svg>
               </Link>
@@ -118,7 +145,6 @@ export default function SiteHeader() {
               </Link>
             </div>
 
-            {/* MOBILE CART ICON */}
             <Link
               href="/cart"
               aria-label="Cart"
@@ -149,7 +175,6 @@ export default function SiteHeader() {
         </div>
       </header>
 
-      {/* MOBILE MENU */}
       {menuOpen && (
         <div className="fixed inset-0 z-50 bg-white lg:hidden">
           <div className="flex items-center justify-between border-b border-gray-100 px-4 py-4">
@@ -194,6 +219,14 @@ export default function SiteHeader() {
               className="border-b border-gray-100 py-4 text-lg font-medium text-[#111111]"
             >
               Shop
+            </Link>
+
+            <Link
+              href="/orders"
+              onClick={() => setMenuOpen(false)}
+              className="border-b border-gray-100 py-4 text-lg font-medium text-[#111111]"
+            >
+              Orders
             </Link>
 
             <Link

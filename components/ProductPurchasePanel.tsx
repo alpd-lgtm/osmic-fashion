@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useCart } from "@/components/CartProvider";
 
 type ProductPurchasePanelProps = {
@@ -20,41 +20,49 @@ export default function ProductPurchasePanel({
 }: ProductPurchasePanelProps) {
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState<string>(sizes[0] || "");
-  const [currentUrl, setCurrentUrl] = useState("");
 
-  useEffect(() => {
-    setCurrentUrl(window.location.href);
-  }, []);
+  const whatsappMessage = encodeURIComponent(
+    `Hi, I want to order:
+Product: ${product.name}
+Size: ${selectedSize || "Not selected"}
+Price: NPR ${product.price}
+Link: ${typeof window !== "undefined" ? window.location.href : ""}`
+  );
 
-  const whatsappUrl = useMemo(() => {
-    const whatsappMessage = encodeURIComponent(
-      `Hi, I want to order:\nProduct: ${product.name}\nSize: ${selectedSize || "Not selected"}\nPrice: NPR ${product.price}\nLink: ${currentUrl}`
-    );
+  const whatsappUrl = `https://wa.me/9779800000000?text=${whatsappMessage}`;
 
-    return `https://wa.me/9779800000000?text=${whatsappMessage}`;
-  }, [product.name, product.price, selectedSize, currentUrl]);
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      price: product.price,
+      image: product.image,
+      size: selectedSize || "Free Size",
+    });
+
+    alert("Added to cart");
+  };
 
   return (
-    <div className="mt-7 flex flex-col gap-4">
+    <div className="mt-7 border-t border-gray-100 pt-7">
       {sizes.length > 0 && (
         <div>
-          <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
-            Select Size
-          </p>
+          <p className="text-sm font-semibold text-[#111111]">Select Size</p>
 
-          <div className="mt-3 flex flex-wrap gap-3">
+          <div className="mt-4 flex flex-wrap gap-3">
             {sizes.map((size) => {
-              const isSelected = selectedSize === size;
+              const active = selectedSize === size;
 
               return (
                 <button
                   key={size}
                   type="button"
                   onClick={() => setSelectedSize(size)}
-                  className={`inline-flex h-12 min-w-[48px] items-center justify-center rounded-full border px-5 text-sm font-medium transition ${
-                    isSelected
+                  className={`min-w-[52px] rounded-full border px-4 py-2 text-sm font-medium transition ${
+                    active
                       ? "border-[#7A1F2A] bg-[#7A1F2A] text-white"
-                      : "border-[#E7DED5] bg-white text-[#444444] hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
+                      : "border-[#D9D0C7] bg-white text-[#111111] hover:border-[#7A1F2A]"
                   }`}
                 >
                   {size}
@@ -65,36 +73,24 @@ export default function ProductPurchasePanel({
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={() =>
-          addToCart({
-            id: product.id,
-            name: product.name,
-            slug: product.slug,
-            price: product.price,
-            image: product.image,
-            size: selectedSize || "Default",
-          })
-        }
-        disabled={sizes.length > 0 && !selectedSize}
-        className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:self-start"
-      >
-        Add to Cart
-      </button>
+      <div className="mt-7 grid gap-3 sm:grid-cols-2">
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          className="inline-flex items-center justify-center rounded-full bg-[#111111] px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-300 hover:scale-[1.02] hover:shadow-lg"
+        >
+          Add to Cart
+        </button>
 
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full bg-[#7A1F2A] px-6 py-3 text-sm font-medium text-white transition hover:opacity-90 sm:w-auto sm:self-start"
-      >
-        Order on WhatsApp
-      </a>
-
-      {selectedSize && (
-        <p className="text-sm text-[#666666]">Selected size: {selectedSize}</p>
-      )}
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center rounded-full border border-[#7A1F2A] bg-white px-6 py-3 text-sm font-semibold text-[#7A1F2A] transition duration-300 hover:bg-[#7A1F2A] hover:text-white hover:shadow-md"
+        >
+          Order on WhatsApp
+        </a>
+      </div>
     </div>
   );
 }

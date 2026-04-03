@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { products } from "@/lib/products";
 
+const categories = ["all", ...new Set(products.map((product) => product.category))];
+
 export default async function ProductsPage({
   searchParams,
 }: {
@@ -12,11 +14,6 @@ export default async function ProductsPage({
   const selectedCategory = params.category || "all";
   const searchText = params.search?.toLowerCase().trim() || "";
 
-  const categories = [
-    "all",
-    ...new Set(products.map((product) => product.category)),
-  ];
-
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       selectedCategory === "all" || product.category === selectedCategory;
@@ -24,159 +21,152 @@ export default async function ProductsPage({
     const matchesSearch =
       searchText === "" ||
       product.name.toLowerCase().includes(searchText) ||
-      product.description.toLowerCase().includes(searchText) ||
-      product.category.toLowerCase().includes(searchText);
+      product.category.toLowerCase().includes(searchText) ||
+      product.description.toLowerCase().includes(searchText);
 
     return matchesCategory && matchesSearch;
   });
 
   return (
-    <main className="mx-auto max-w-7xl bg-white px-4 pt-4 pb-10 sm:px-6 sm:pt-6 lg:px-8">
-      <section className="rounded-[2rem] bg-[#FCFAF8] px-5 py-8 ring-1 ring-[#EEE7DF] sm:px-7 sm:py-10">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-[#8A6A4A] sm:text-xs">
-              Collection
-            </p>
-            <h1 className="mt-3 text-3xl font-semibold tracking-[-0.02em] text-[#111111] sm:text-4xl">
-              Shop Products
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-600 sm:text-base">
-              Discover elegant styles curated for everyday wear, festive moments,
-              and timeless comfort.
-            </p>
-          </div>
+    <main className="bg-white">
+      <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+        <div className="mb-6">
+          <p className="text-sm uppercase tracking-[0.18em] text-[#7A1F2A]">
+            Shop Collection
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#111111] sm:text-4xl">
+            Discover Our Styles
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-600 sm:text-base">
+            Explore elegant pieces designed for festive moments, everyday wear,
+            and timeless style.
+          </p>
+        </div>
 
-          <form className="w-full lg:max-w-sm">
-            <label htmlFor="search" className="sr-only">
-              Search products
-            </label>
-            <input
-              id="search"
-              name="search"
-              defaultValue={params.search || ""}
-              placeholder="Search products..."
-              className="h-12 w-full rounded-full border border-[#E7DED5] bg-white px-5 text-sm text-[#111111] outline-none transition placeholder:text-gray-400 focus:border-[#7A1F2A]"
-            />
-            {selectedCategory !== "all" && (
-              <input type="hidden" name="category" value={selectedCategory} />
-            )}
+        <div className="rounded-3xl border border-[#E7DED5] bg-[#FCFBF9] p-4 sm:p-5">
+          <form className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <label
+                htmlFor="search"
+                className="mb-2 block text-sm font-medium text-[#111111]"
+              >
+                Search products
+              </label>
+              <input
+                id="search"
+                name="search"
+                type="text"
+                defaultValue={params.search || ""}
+                placeholder="Search by product name or category"
+                className="w-full rounded-full border border-[#D9D0C7] bg-white px-5 py-3 text-sm text-[#111111] outline-none transition focus:border-[#7A1F2A]"
+              />
+            </div>
+
+            <div className="flex flex-wrap gap-2 lg:justify-end">
+              {categories.map((category) => {
+                const isActive = selectedCategory === category;
+
+                return (
+                  <Link
+                    key={category}
+                    href={
+                      searchText
+                        ? `/products?category=${category}&search=${encodeURIComponent(
+                            params.search || ""
+                          )}`
+                        : `/products?category=${category}`
+                    }
+                    className={`rounded-full border px-4 py-2 text-sm font-medium capitalize transition ${
+                      isActive
+                        ? "border-[#7A1F2A] bg-[#7A1F2A] text-white"
+                        : "border-[#D9D0C7] bg-white text-[#111111] hover:border-[#7A1F2A]"
+                    }`}
+                  >
+                    {category}
+                  </Link>
+                );
+              })}
+            </div>
           </form>
         </div>
 
-        <div className="mt-6 flex flex-wrap gap-2.5">
-          {categories.map((category) => {
-            const isActive = selectedCategory === category;
-
-            const href =
-              category === "all"
-                ? params.search
-                  ? `/products?search=${encodeURIComponent(params.search)}`
-                  : "/products"
-                : params.search
-                ? `/products?category=${encodeURIComponent(
-                    category
-                  )}&search=${encodeURIComponent(params.search)}`
-                : `/products?category=${encodeURIComponent(category)}`;
-
-            return (
-              <Link
-                key={category}
-                href={href}
-                className={`inline-flex min-h-[42px] items-center justify-center rounded-full px-4 text-sm font-medium transition ${
-                  isActive
-                    ? "bg-[#7A1F2A] text-white"
-                    : "border border-[#E7DED5] bg-white text-gray-700 hover:border-[#7A1F2A] hover:text-[#7A1F2A]"
-                }`}
-              >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      <div className="mt-6">
-        <p className="text-sm text-gray-500">
-          {filteredProducts.length} product
-          {filteredProducts.length !== 1 ? "s" : ""} found
-        </p>
-      </div>
-
-      {filteredProducts.length === 0 ? (
-        <section className="mt-6 rounded-[2rem] border border-dashed border-gray-200 bg-white px-6 py-16 text-center">
-          <h2 className="text-xl font-semibold text-[#111111]">
-            No products found
-          </h2>
-          <p className="mt-3 text-sm leading-7 text-gray-600">
-            Try a different search term or browse all categories.
+        <div className="mt-6 flex items-center justify-between gap-4">
+          <p className="text-sm text-gray-600">
+            {filteredProducts.length} product
+            {filteredProducts.length === 1 ? "" : "s"} found
           </p>
-          <Link
-            href="/products"
-            className="mt-6 inline-flex min-h-[46px] items-center justify-center rounded-full bg-[#7A1F2A] px-5 py-3 text-sm font-medium text-white transition hover:opacity-90"
-          >
-            View All Products
-          </Link>
-        </section>
-      ) : (
-        <section className="mt-8">
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-            {filteredProducts.map((product) => (
-              <article
-                key={product.id}
-                className="group overflow-hidden rounded-[1.75rem] bg-white ring-1 ring-[#EAE4DD] transition duration-500 hover:-translate-y-[2px] hover:shadow-[0_18px_40px_rgba(17,17,17,0.06)] hover:ring-[#E2D6CA]"
-              >
-                <Link href={`/products/${product.slug}`} className="block">
-                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#F6F1EB] p-4 sm:p-6">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-contain transition duration-700 ease-out group-hover:scale-[1.02]"
-                    />
-                  </div>
-                </Link>
 
-                <div className="px-4 pb-5 pt-4 sm:px-5 sm:pb-6 sm:pt-5">
-                  <p className="text-[10px] uppercase tracking-[0.28em] text-[#8A6A4A]">
+          {(selectedCategory !== "all" || searchText) && (
+            <Link
+              href="/products"
+              className="text-sm font-medium text-[#7A1F2A] transition hover:opacity-80"
+            >
+              Clear filters
+            </Link>
+          )}
+        </div>
+
+        {filteredProducts.length === 0 ? (
+          <div className="mt-10 rounded-3xl border border-[#E7DED5] bg-[#FCFBF9] px-6 py-14 text-center">
+            <h2 className="text-2xl font-semibold text-[#111111]">
+              No products found
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-gray-600 sm:text-base">
+              Try another category or search term to explore more styles.
+            </p>
+            <Link
+              href="/products"
+              className="mt-6 inline-flex rounded-full bg-[#111111] px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            >
+              View All Products
+            </Link>
+          </div>
+        ) : (
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredProducts.map((product) => (
+              <Link
+                key={product.id}
+                href={`/products/${product.slug}`}
+                className="group overflow-hidden rounded-3xl border border-[#E7DED5] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden bg-[#F8F5F0]">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                  />
+                </div>
+
+                <div className="p-4 sm:p-5">
+                  <p className="text-[11px] uppercase tracking-[0.14em] text-gray-500 sm:text-xs">
                     {product.category}
                   </p>
 
-                  <div className="mt-2 flex flex-col gap-1">
-                    <h2 className="text-[17px] font-semibold leading-snug text-[#111111] sm:text-[20px]">
-                      <Link
-                        href={`/products/${product.slug}`}
-                        className="transition hover:text-[#7A1F2A]"
-                      >
-                        {product.name}
-                      </Link>
-                    </h2>
+                  <h2 className="mt-2 line-clamp-2 text-sm font-semibold text-[#111111] sm:text-base">
+                    {product.name}
+                  </h2>
 
-                    <p className="text-[15px] font-normal text-[#5B5B5B] sm:text-base">
-                      NPR {product.price}
-                    </p>
-                  </div>
-
-                  <p className="mt-3 line-clamp-2 text-[13px] leading-6 text-[#6B6B6B] sm:text-sm sm:leading-7">
+                  <p className="mt-2 text-sm leading-6 text-gray-600 line-clamp-2">
                     {product.description}
                   </p>
 
-                  <div className="mt-5 flex items-center justify-between">
-                    <Link
-                      href={`/products/${product.slug}`}
-                      className="inline-flex items-center text-[13px] font-medium tracking-[0.02em] text-[#111111] transition hover:text-[#7A1F2A] sm:text-sm"
-                    >
-                      View Product
-                    </Link>
+                  <div className="mt-4 flex items-center justify-between gap-3">
+                    <p className="text-sm font-semibold text-[#111111] sm:text-base">
+                      NPR {product.price.toLocaleString()}
+                    </p>
 
-                    <span className="h-px w-8 bg-[#D8C7B6] transition duration-500 group-hover:w-12" />
+                    <span className="rounded-full border border-[#E7DED5] px-3 py-1 text-xs font-medium text-[#7A1F2A] transition group-hover:border-[#7A1F2A]">
+                      View
+                    </span>
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
-        </section>
-      )}
+        )}
+      </section>
     </main>
   );
 }
